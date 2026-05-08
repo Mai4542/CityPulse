@@ -1,1 +1,35 @@
+@font-face {
+  font-family: 'Cairo';
+  src: url('./assets/fonts/Cairo-Regular.ttf');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Cairo';
+  src: url('./assets/fonts/Cairo-SemiBold.ttf');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'Cairo';
+  src: url('./assets/fonts/Cairo-Bold.ttf');
+  font-weight: 700;
+}
+
 @import "tailwindcss";
+
+@theme {
+  --font-main: 'Cairo', sans-serif;
+
+  --color-primary:        #249A00;
+  --color-primary-hover:  #1d7d00;  
+
+
+  --color-background: #F8FAFC;
+  --color-text:       #1E293B;
+
+
+  --color-danger:  #DC2626;
+  --color-warning: #D97706;
+  --color-info:    #2563EB;
+}
