@@ -21,12 +21,9 @@
 @theme {
   --font-main: 'Cairo', sans-serif;
 
-  --color-primary:        #249A00;
-  --color-primary-hover:  #1d7d00;  
-
-
-  --color-background: #F8FAFC;
-  --color-text:       #1E293B;
+  --color-primary:      #0d9488;
+  --color-primary-dark: #0f766e;
+  --color-primary-darker: #134e4a; 
 
 
   --color-danger:  #DC2626;
