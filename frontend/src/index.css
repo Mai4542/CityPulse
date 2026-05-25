@@ -1,3 +1,4 @@
+@import "tailwindcss";
 @font-face {
   font-family: 'Cairo';
   src: url('./assets/fonts/Cairo-Regular.ttf');
@@ -15,8 +16,6 @@
   src: url('./assets/fonts/Cairo-Bold.ttf');
   font-weight: 700;
 }
-
-@import "tailwindcss";
 
 @theme {
   --font-main: 'Cairo', sans-serif;
