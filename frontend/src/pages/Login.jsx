@@ -51,6 +51,32 @@ const IconEye = ({ show }) => (
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
+  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState({});
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let currentErrors = {};
+
+    const phoneRegex = /^01[0125][0-9]{8}$/;
+
+    if (!phone.trim()) {
+      currentErrors.phone = "حقل رقم الهاتف مطلوب.";
+    } else if (!phoneRegex.test(phone)) {
+      currentErrors.phone = "الرجاء إدخال رقم هاتف مصري صحيح مكون من 11 رقماً.";
+    }
+
+    if (!password.trim()) {
+      currentErrors.password = "حقل كلمة المرور مطلوب.";
+    }
+
+    setErrors(currentErrors);
+
+    if (Object.keys(currentErrors).length === 0) {
+      console.log('Logging in...', { phone, password });
+    }
+  };
 
   return (
     <div className="min-h-screen text-white font-main select-none bg-[radial-gradient(circle_at_center,_#0d3d3d_0%,_#072a33_45%,_#041626_100%)] flex items-center justify-center p-4 md:p-10">
@@ -85,14 +111,24 @@ export default function Login() {
               <p className="text-xs text-gray-400">ادخل بياناتك للمتابعة</p>
             </div>
 
-            <form className="space-y-4" dir="rtl" onSubmit={(e) => e.preventDefault()}>
+            <form className="space-y-4" dir="rtl" onSubmit={handleSubmit}>
               <div className="space-y-1.5">
                 <label className="text-sm text-gray-300 font-medium block">رقم الهاتف</label>
                 <input
                   type="tel"
                   placeholder="01xxxxxxxxx"
-                  className="w-full bg-[#1a3c42]/90 border border-white/10 rounded-2xl py-3 px-4 text-sm text-left font-sans text-gray-200 focus:outline-none focus:border-primary transition-all placeholder:text-gray-500"
+                  value={phone}
+                  onChange={(e) => {
+                    setPhone(e.target.value.replace(/[^0-9]/g, '')); //يمنع كتابة الحروف
+                    if(errors.phone) setErrors({...errors, phone: ''});
+                  }}
+                  className={`w-full bg-[#1a3c42]/90 border rounded-2xl py-3 px-4 text-sm text-left font-sans text-gray-200 focus:outline-none transition-all placeholder:text-gray-500 ${errors.phone ? 'border-red-500/80 focus:border-red-500' : 'border-white/10 focus:border-primary'}`}
                 />
+                {errors.phone && (
+                  <p className="text-[11px] text-red-400 font-medium mt-1 pr-1 leading-normal">
+                    {errors.phone}
+                  </p>
+                )}
               </div>
 
               <div className="space-y-1.5">
@@ -104,12 +140,22 @@ export default function Login() {
                   <input
                     type={showPassword ? "text" : "password"}
                     placeholder="••••••••"
-                    className="w-full bg-[#1a3c42]/90 border border-white/10 rounded-2xl py-3 pl-11 pr-4 text-sm font-sans text-gray-200 focus:outline-none focus:border-primary transition-all placeholder:text-gray-500"
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                      if(errors.password) setErrors({...errors, password: ''});
+                    }}
+                    className={`w-full bg-[#1a3c42]/90 border rounded-2xl py-3 pl-11 pr-4 text-sm font-sans text-gray-200 focus:outline-none transition-all placeholder:text-gray-500 ${errors.password ? 'border-red-500/80 focus:border-red-500' : 'border-white/10 focus:border-primary'}`}
                   />
                   <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute left-4 focus:outline-none">
                     <IconEye show={showPassword} />
                   </button>
                 </div>
+                {errors.password && (
+                  <p className="text-[11px] text-red-400 font-medium mt-1 pr-1">
+                    {errors.password}
+                  </p>
+                )}
               </div>
 
               <button type="submit" className="w-full bg-primary hover:bg-primary-dark text-white font-bold py-3 rounded-2xl transition-all shadow-md text-sm mt-4">
@@ -129,24 +175,18 @@ export default function Login() {
         </div>
 
         {/* الجزء الأيمن */}
-        <div className="hidden md:flex flex-col items-start text-right space-y-6 w-full max-w-[450px] md:justify-self-end relative" dir="rtl">
-         
-
+        <div className="hidden md:flex flex-col items-start text-right space-y-6 w-full max-w-[550px] md:justify-self-end md:-mr-26 relative" dir="rtl">
           <div className="absolute -top-6 right-0 flex flex-row items-center gap-3 select-none" dir="rtl">
             <div className="bg-primary text-white font-bold p-1 rounded-2xl text-base flex items-center justify-center min-w-[46px] h-[46px] shadow-sm">
               CP
             </div>
-
-
             <div className="flex flex-col text-right">
               <h1 className="text-lg font-bold tracking-wide leading-none">CityPulse</h1>
               <p className="text-xs text-primary mt-1 font-medium">محافظة القليوبية</p>
             </div>
-
-
           </div>
 
-          <div className="space-y-2 w-full mt-25">
+          <div className="space-y-2 w-full mt-36">
             <h2 className="text-4xl font-extrabold text-white leading-tight">
               بلاغك يصنع<br />
               <span className="text-primary inline-block mt-0.5">الفارق</span>
@@ -156,40 +196,39 @@ export default function Login() {
             </p>
           </div>
 
-          <ul className="space-y-3.5 text-sm text-gray-200 font-medium w-full">
+          <ul className="space-y-4 text-[15px] text-gray-200 font-medium w-full">
             <li className="flex items-center text-primary">
               <IconCheck />
               <span className="text-white mr-1">إبلاغ فوري بصورة وموقع GPS</span>
             </li>
-            <li className="flex items-center text-primary">
+            <li className="flex items-center text-primary transition-all">
               <IconCheck />
               <span className="text-white mr-1">متابعة حالة بلاغك أولاً بأول</span>
             </li>
-            <li className="flex items-center text-primary">
+            <li className="flex items-center text-primary transition-all">
               <IconCheck />
               <span className="text-white mr-1">إشعارات لحظية عند الحل</span>
             </li>
-            <li className="flex items-center text-primary">
+            <li className="flex items-center text-primary transition-all">
               <IconCheck />
               <span className="text-white mr-1">تقييم الخدمة وبناء سجل الأداء</span>
             </li>
           </ul>
 
-          <div className="grid grid-cols-3 gap-3.5 w-full pt-25">
-            <div className="bg-[#12343a]/75 p-3 rounded-2xl text-center border border-white/10 shadow-sm backdrop-blur-md">
-              <p className="text-xl font-black text-primary font-sans">+١٢ ألف</p>
+          <div className="grid grid-cols-3 gap-2.5 w-full pt-16">
+            <div className="bg-[#12343a]/75 py-3 px-6 rounded-2xl text-center border border-white/10 shadow-sm backdrop-blur-md">
+              <p className="text-2xl font-extrabold text-primary tracking-wide drop-shadow-[0_0_8px_rgba(255,255,255,0.35)]">+١٢ ألف</p>
               <p className="text-[11px] text-gray-400 mt-1">مستخدم نشط</p>
             </div>
             <div className="bg-[#12343a]/75 p-3 rounded-2xl text-center border border-white/10 shadow-sm backdrop-blur-md">
-              <p className="text-xl font-black text-primary font-sans">٨٩٪</p>
+              <p className="text-2xl font-extrabold text-primary tracking-wide drop-shadow-[0_0_8px_rgba(255,255,255,0.35)]">٨٩٪</p>
               <p className="text-[11px] text-gray-400 mt-1">نسبة الحل</p>
             </div>
             <div className="bg-[#12343a]/75 p-3 rounded-2xl text-center border border-white/10 shadow-sm backdrop-blur-md">
-              <p className="text-xl font-black text-primary font-sans">٢.٤س</p>
+              <p className="text-2xl font-extrabold text-primary tracking-wide drop-shadow-[0_0_8px_rgba(255,255,255,0.35)]">٢.٤س</p>
               <p className="text-[11px] text-gray-400 mt-1">متوسط الاستجابة</p>
             </div>
           </div>
-
         </div>
 
       </div>
