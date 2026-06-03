@@ -4,17 +4,11 @@ import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import TrackReport from "./pages/TrackReport";
- 
-
-import UserDashboard from "./pages/UserDashboard";
-import AdminDashboard from "./pages/AdminDashboard";
- 
+import UserDashboard from "./pages/UserDashboard"; 
 import Analytics from "./pages/Analytics";
 import ReportForm from "./pages/ReportForm";
- 
-
 import ProtectedRoute from "./routes/ProtectedRoute";
-import AdminRoute from "./routes/AdminRoute";
+
  
 function App() {
   return (
@@ -29,17 +23,8 @@ function App() {
           <Route path="/dashboard"  element={<UserDashboard />} />
           <Route path="/report"     element={<ReportForm />} />
           <Route path="/analytics"  element={<Analytics />} />
-        </Route>
- 
-      
-        <Route element={<AdminRoute />}>
-          <Route path="/admin"            element={<AdminDashboard />} />
-          <Route path="/admin/analytics"  element={<Analytics />} />
-     
-        </Route>
- 
-       
-        <Route path="*" element={<Navigate to="/" replace />} />
+        </Route>       
+        <Route path="*" element={<Navigate to="/" />} />
  
       </Routes>
     </BrowserRouter>
