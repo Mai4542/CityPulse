@@ -1,21 +1,49 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Hero from './components/Hero';
-import ReportForm from './pages/ReportForm';
-import TrackPage from './pages/TrackPage';
-import RatePage from './pages/RatePage';
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
+import Landing from "./pages/Landing";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import TrackReport from "./pages/TrackReport";
+ 
+
+import UserDashboard from "./pages/UserDashboard";
+import AdminDashboard from "./pages/AdminDashboard";
+ 
+import Analytics from "./pages/Analytics";
+import ReportForm from "./pages/ReportForm";
+ 
+
+import ProtectedRoute from "./routes/ProtectedRoute";
+import AdminRoute from "./routes/AdminRoute";
+ 
 function App() {
   return (
-    <Router>
+    <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Hero />} />
-        <Route path="/report" element={<ReportForm />} />
-        <Route path="/track" element={<TrackPage />} />
-        <Route path="/rate" element={<RatePage />} />
+        <Route path="/"          element={<Landing />} />
+        <Route path="/login"     element={<Login />} />
+        <Route path="/register"  element={<Register />} />
+        <Route path="/track"     element={<TrackReport />} />
+
+        <Route element={<ProtectedRoute />}>
+          <Route path="/dashboard"  element={<UserDashboard />} />
+          <Route path="/report"     element={<ReportForm />} />
+          <Route path="/analytics"  element={<Analytics />} />
+        </Route>
+ 
+      
+        <Route element={<AdminRoute />}>
+          <Route path="/admin"            element={<AdminDashboard />} />
+          <Route path="/admin/analytics"  element={<Analytics />} />
+     
+        </Route>
+ 
+       
+        <Route path="*" element={<Navigate to="/" replace />} />
+ 
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 }
-
+ 
 export default App;
