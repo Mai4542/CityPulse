@@ -12,17 +12,30 @@ dotenv.config();
 
 const authRoutes = require('./routes/authRoutes');
 
+const reportRoutes = require('./routes/report.routes');
+
 const connectDB = require('./config/database');
 
 
 const AppError = require('./utils/AppError');
 
+const { updateAllPriorityScores } = require('./services/priority.service');
+
 connectDB();
+
+setInterval(async () => {
+  await updateAllPriorityScores();
+  console.log('Priority scores updated'.green);
+}, 24 * 60 * 60 * 1000);
 
 const app = express();
 
 
+
 app.use(express.json({ limit: '10kb' }));
+
+
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 app.use(helmet());
 
@@ -43,6 +56,8 @@ app.use('/api', limiter);
 
 
 app.use('/api/auth', authRoutes);
+
+app.use('/api/reports', reportRoutes);
 
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'OK', message: 'Server is running' });
