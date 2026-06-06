@@ -32,7 +32,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Password is required'],
     minlength: [8, 'Password must be at least 8 characters'],
-    select: false, // Don't return password by default
+    select: false, 
   },
   phoneNumber: {
     type: String,
@@ -70,32 +70,31 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-// Hash password before saving
+
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
   
   try {
     const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_ROUNDS));
     this.password = await bcrypt.hash(this.password, salt);
-    this.passwordChangedAt = Date.now() - 1000; // Subtract 1 second to ensure token is created after password change
+    this.passwordChangedAt = Date.now() - 1000; 
     next();
   } catch (error) {
     next(error);
   }
 });
 
-// Update timestamps
+
 userSchema.pre('save', function (next) {
   this.updatedAt = Date.now();
   next();
 });
 
-// Compare password method
+
 userSchema.methods.comparePassword = async function (candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.password);
 };
 
-// Generate JWT token
 userSchema.methods.generateAuthToken = function () {
   return jwt.sign(
     { 
@@ -108,7 +107,7 @@ userSchema.methods.generateAuthToken = function () {
   );
 };
 
-// Remove sensitive information when converting to JSON
+
 userSchema.methods.toJSON = function () {
   const user = this.toObject();
   delete user.password;

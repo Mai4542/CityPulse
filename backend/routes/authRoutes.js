@@ -11,12 +11,12 @@ const {
 const { protect } = require('../middleware/authMiddleware');
 const { validateRegistration, validateLogin } = require('../utils/validation');
 
-// Public routes
+
 router.post('/register', validateRegistration, register);
 router.post('/login', validateLogin, login);
 
-// Protected routes
-router.use(protect); // All routes below this will use protect middleware
+
+router.use(protect); 
 
 router.get('/me', getMe);
 router.patch('/update-me', updateMe);
