@@ -6,7 +6,7 @@ const protect = async (req, res, next) => {
   try {
     let token;
 
-    // Check for token in headers
+  
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
       token = req.headers.authorization.split(' ')[1];
     }
@@ -15,16 +15,16 @@ const protect = async (req, res, next) => {
       return next(new AppError('You are not logged in. Please log in to access this resource.', 401));
     }
 
-    // Verify token
+
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // Check if user still exists
+   
     const user = await User.findById(decoded.id).select('-password');
     if (!user) {
       return next(new AppError('The user belonging to this token no longer exists.', 401));
     }
 
-    // Check if user changed password after token was issued
+  
     if (user.passwordChangedAt) {
       const changedTimestamp = parseInt(user.passwordChangedAt.getTime() / 1000, 10);
       if (decoded.iat < changedTimestamp) {
@@ -32,7 +32,7 @@ const protect = async (req, res, next) => {
       }
     }
 
-    // Grant access
+    
     req.user = user;
     next();
   } catch (error) {

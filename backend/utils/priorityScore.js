@@ -12,7 +12,7 @@ const calculatePriority = (report) => {
 
     const countScore = Math.min(report.reportsCount * 4, 20);
 
-
+const daysWaiting = (Date.now() - new Date(report.createdAt)) / (1000 * 60 * 60 * 24);
     let timeScore = 0;
     if (daysWaiting >= 7) timeScore = 20;     
     else if (daysWaiting >= 3) timeScore = 12;
