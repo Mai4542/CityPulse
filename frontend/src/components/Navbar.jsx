@@ -7,28 +7,28 @@ const Navbar = () => {
     <nav className="fixed top-0 right-0 left-0 z-50 bg-white/95 backdrop-blur border-b border-slate-100 shadow-sm">
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         <a href="/" className="flex items-center gap-3">
-          <div className="w-9 h-9 bg-teal-700 rounded-lg flex items-center justify-center text-white font-black text-lg">
+          <div className="w-9 h-9 bg-primary-dark rounded-lg flex items-center justify-center text-white font-black text-lg">
             CP
           </div>
           <div className="leading-tight">
-            <span className="font-black text-teal-900 text-lg block leading-none">CityPulse</span>
+            <span className="font-black text-primary-darker text-lg block leading-none">CityPulse</span>
             <span className="text-[10px] text-slate-400 tracking-wider">محافظة القليوبية</span>
           </div>
         </a>
         
         <div className="hidden md:flex items-center gap-8">
           {["المميزات", "كيف يعمل", "آراء المواطنين", "تواصل معنا"].map((c) => (
-            <a href="#" key={c} className="text-sm font-bold text-slate-600 hover:text-teal-700 transition-colors">
+            <a href="#" key={c} className="text-sm font-bold text-slate-600 hover:text-primary-dark transition-colors">
               {c}
             </a>
           ))}
         </div>
         
         <div className="hidden md:flex items-center gap-3">
-          <a href="/auth" className="px-5 py-2 text-sm font-bold text-teal-700 border border-teal-200 rounded-lg hover:bg-teal-50 transition-colors">
+          <a href="/auth" className="px-5 py-2 text-sm font-bold text-primary-dark border border-primary/30 rounded-lg hover:bg-primary/10 transition-colors">
             تسجيل الدخول
           </a>
-          <a href="/auth" className="px-5 py-2 text-sm font-bold text-white bg-teal-600 rounded-lg hover:bg-teal-700 transition-colors shadow-sm">
+          <a href="/auth" className="px-5 py-2 text-sm font-bold text-white bg-primary rounded-lg hover:bg-primary-dark transition-colors shadow-sm">
             ابدأ الآن
           </a>
         </div>
@@ -54,10 +54,10 @@ const Navbar = () => {
             </a>
           ))}
           <div className="flex gap-3 pt-2">
-            <a href="/auth" className="flex-1 text-center py-2 text-sm font-bold text-teal-700 border border-teal-200 rounded-lg">
+            <a href="/auth" className="flex-1 text-center py-2 text-sm font-bold text-primary-dark border border-primary/30 rounded-lg">
               تسجيل الدخول
             </a>
-            <a href="/auth" className="flex-1 text-center py-2 text-sm font-bold text-white bg-teal-600 rounded-lg">
+            <a href="/auth" className="flex-1 text-center py-2 text-sm font-bold text-white bg-primary rounded-lg">
               ابدأ الآن
             </a>
           </div>
