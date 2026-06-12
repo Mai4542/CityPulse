@@ -1,4 +1,4 @@
-import React, { createContext,  useState, useEffect } from 'react';
+import { createContext, useState, useEffect } from 'react';
 import { authAPI } from '../api/api';
 
 
@@ -15,15 +15,16 @@ export const AuthProvider = ({ children }) => {
       const token = localStorage.getItem('token');
 
       if (!token) {
-        setLoading(false);
-        return;
-      }
+          // موك مؤقت لحد ما الباك إند يجهز
+      setUser({ name: 'م. خالد حسن', role: 'admin' });
+      setLoading(false);
+      return;
+}
 
       try {
         const response = await authAPI.getMe();
         setUser(response.data.data.user);
-      } catch (error) {
-     
+      } catch{
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         setUser(null);
