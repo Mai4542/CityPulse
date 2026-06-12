@@ -5,15 +5,16 @@ import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import TrackReport from "./pages/TrackReport";
-import UserDashboard from "./pages/UserDashboard"; 
+import UserDashboard from "./pages/UserDashboard";
 import Analytics from "./pages/Analytics";
 import ReportForm from "./pages/ReportForm";
+import AdminDashboard from "./pages/AdminDashboard";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import AdminRoute from "./routes/AdminRoute";
 
 function App() {
   const { loading } = useAuth();
 
-  
   if (loading) {
     return (
       <div className="min-h-screen bg-[#041626] flex items-center justify-center">
@@ -34,7 +35,11 @@ function App() {
           <Route path="/dashboard" element={<UserDashboard />} />
           <Route path="/report"    element={<ReportForm />} />
           <Route path="/analytics" element={<Analytics />} />
-        </Route>       
+        </Route>
+
+        <Route element={<AdminRoute />}>
+          <Route path="/admin" element={<AdminDashboard />} />
+        </Route>
 
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
