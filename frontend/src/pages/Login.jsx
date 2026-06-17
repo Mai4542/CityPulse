@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/useAuth';
 
 const IconCheck = () => (
@@ -30,6 +30,10 @@ const IconEye = ({ show }) => (
 export default function Login() {
   const { login, user } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+
+
+  const from = location.state?.from?.pathname || '/dashboard';
 
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
@@ -37,12 +41,10 @@ export default function Login() {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
-  // ✅ لو عنده account خليه يروح للـdashboard تلقائي
   useEffect(() => {
-    if (user) navigate('/dashboard');
+    if (user) navigate(from);
   }, [user]);
 
-  // ✅ validate functions
   const validateEmail = (value) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!value.trim()) return "حقل البريد الإلكتروني مطلوب.";
@@ -74,9 +76,8 @@ export default function Login() {
     try {
       setLoading(true);
 
-      // ✅ بنستخدم الـContext بدل الـfetch المباشر
       await login(email, password);
-      navigate('/dashboard');
+      navigate(from);
 
     } catch (error) {
       setErrors({
@@ -94,7 +95,6 @@ export default function Login() {
         input::-ms-clear { display: none !important; }
       `}</style>
 
-      {/* ✅ Loading overlay */}
       {loading && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center">
           <div className="bg-[#12343a] border border-white/10 rounded-2xl px-8 py-5 flex items-center gap-3 shadow-2xl">
@@ -194,7 +194,6 @@ export default function Login() {
           </div>
         </div>
 
-        {/* الجزء الأيمن */}
         <div className="hidden md:flex flex-col items-start text-right space-y-6 w-full max-w-[550px] md:justify-self-end md:-mr-26 relative" dir="rtl">
           <div className="absolute -top-6 right-0 flex flex-row items-center gap-3 select-none" dir="rtl">
             <div className="bg-primary text-white font-bold p-1 rounded-2xl text-base flex items-center justify-center min-w-[46px] h-[46px] shadow-sm">CP</div>

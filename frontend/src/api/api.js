@@ -21,7 +21,10 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
+        const isLoginRequest = error.config?.url?.includes('/auth/login');
+    const isRegisterRequest = error.config?.url?.includes('/auth/register');
+
+    if (error.response?.status === 401 && !isLoginRequest && !isRegisterRequest) {
  
       localStorage.removeItem('token');
       localStorage.removeItem('user');
@@ -44,6 +47,19 @@ export const authAPI = {
 
   logout: () =>
     api.post('/auth/logout'),
+};
+
+export const reportAPI = {
+  createReport: (formDataToSend) =>
+    api.post('/reports', formDataToSend, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    }),
+
+  getMyReports: () =>
+    api.get('/reports/my-reports'),
+
+  getReportById: (id) =>
+    api.get(`/reports/${id}`),
 };
 
 export default api;

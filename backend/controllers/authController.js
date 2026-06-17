@@ -72,7 +72,7 @@ const login = async (req, res, next) => {
     const user = await User.findOne({ email }).select('+password');
 
     if (!user) {
-      return next(new AppError('Invalid email or password', 401));
+      return next(new AppError('البريد الإلكتروني أو كلمة المرور غير صحيحة.', 401));
     }
 
     if (!user.isActive) {
@@ -82,7 +82,7 @@ const login = async (req, res, next) => {
     const isPasswordValid = await user.comparePassword(password);
 
     if (!isPasswordValid) {
-      return next(new AppError('Invalid email or password', 401));
+      return next(new AppError('البريد الإلكتروني أو كلمة المرور غير صحيحة.', 401));
     }
 
   

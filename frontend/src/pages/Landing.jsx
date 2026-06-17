@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
 import AuthRequiredModal from "../components/AuthRequiredModal";
 const Landing = () => {
-    const { user } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [showAuthModal, setShowAuthModal] = useState(false);
 
@@ -13,7 +13,7 @@ const Landing = () => {
     if (user) {
       navigate("/report");
     } else {
-      setShowAuthModal(true); 
+      setShowAuthModal(true);
     }
   };
   return (
@@ -61,12 +61,18 @@ const Landing = () => {
               </a>
             </div>
             <div className="hidden md:flex items-center gap-3">
-              <Link to="/login" className="px-5 py-2 text-sm font-bold text-white bg-primary rounded-lg hover:bg-primary-dark transition-colors shadow-sm">
+              <Link
+                to="/login"
+                className="px-5 py-2 text-sm font-bold text-white bg-primary rounded-lg hover:bg-primary-dark transition-colors shadow-sm"
+              >
                 تسجيل الدخول
               </Link>
-                <Link to="/register" className="px-5 py-2 text-sm font-bold text-primary-dark border border-primary/30 rounded-lg hover:bg-primary/10 transition-colors">
-                  ابدأ الآن
-                </Link>
+              <Link
+                to="/register"
+                className="px-5 py-2 text-sm font-bold text-primary-dark border border-primary/30 rounded-lg hover:bg-primary/10 transition-colors"
+              >
+                ابدأ الآن
+              </Link>
             </div>
             <button className="md:hidden text-slate-600">
               <svg
@@ -104,28 +110,28 @@ const Landing = () => {
           </div>
           <div className="max-w-5xl mx-auto text-center relative">
             <div className="inline-flex items-center gap-2 bg-teal-400/10 text-teal-300 px-4 py-2 rounded-full text-sm font-bold mb-8 border border-teal-400/30 backdrop-blur mx-auto">
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="w-4 h-4"
-    aria-hidden="true"
-  >
-    <line x1="3" x2="21" y1="22" y2="22"></line>
-    <line x1="6" x2="6" y1="18" y2="11"></line>
-    <line x1="10" x2="10" y1="18" y2="11"></line>
-    <line x1="14" x2="14" y1="18" y2="11"></line>
-    <line x1="18" x2="18" y1="18" y2="11"></line>
-    <polygon points="12 2 20 7 4 7"></polygon>
-  </svg>
- منصة القليوبية الرقمية لإدارة البلاغات
-</div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="w-4 h-4"
+                aria-hidden="true"
+              >
+                <line x1="3" x2="21" y1="22" y2="22"></line>
+                <line x1="6" x2="6" y1="18" y2="11"></line>
+                <line x1="10" x2="10" y1="18" y2="11"></line>
+                <line x1="14" x2="14" y1="18" y2="11"></line>
+                <line x1="18" x2="18" y1="18" y2="11"></line>
+                <polygon points="12 2 20 7 4 7"></polygon>
+              </svg>
+              منصة القليوبية الرقمية لإدارة البلاغات
+            </div>
             <h1 className="text-4xl md:text-6xl font-black text-white mb-6 leading-tight">
               صوتك يبني<span className="block text-primary mt-1">محافظتك</span>
             </h1>
@@ -135,28 +141,28 @@ const Landing = () => {
               بشفافية كاملة.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-             <button
-  onClick={handleCreateReportClick}
-  className="w-full sm:w-auto cursor-pointer px-8 py-4 text-lg font-black text-white bg-primary hover:bg-primary-dark rounded-xl transition-colors shadow-lg shadow-primary/25 flex items-center justify-center gap-2"
->
-  ابدأ الإبلاغ الآن
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="lucide lucide-arrow-left w-5 h-5"
-    aria-hidden="true"
-  >
-    <path d="m12 19-7-7 7-7"></path>
-    <path d="M19 12H5"></path>
-  </svg>
-</button>
+              <button
+                onClick={handleCreateReportClick}
+                className="w-full sm:w-auto cursor-pointer px-8 py-4 text-lg font-black text-white bg-primary hover:bg-primary-dark rounded-xl transition-colors shadow-lg shadow-primary/25 flex items-center justify-center gap-2"
+              >
+                ابدأ الإبلاغ الآن
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="lucide lucide-arrow-left w-5 h-5"
+                  aria-hidden="true"
+                >
+                  <path d="m12 19-7-7 7-7"></path>
+                  <path d="M19 12H5"></path>
+                </svg>
+              </button>
               <button className="w-full sm:w-auto px-8 py-4 text-lg font-bold text-slate-200 bg-white/10 border border-white/20 rounded-xl hover:bg-white/20 transition-colors backdrop-blur">
                 شاهد كيف يعمل
               </button>
@@ -249,7 +255,7 @@ const Landing = () => {
                   <p className="text-xs text-white/70 mt-0.5">
                     التحول الذي يصنعه كل بلاغ
                   </p>
-                </div>  
+                </div>
               </div>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -944,65 +950,68 @@ const Landing = () => {
             </div>
           </div>
         </section>
-         <section className="relative overflow-hidden py-24 px-6 text-center">
-  <div className="absolute inset-0">
-    <img
-      alt=""
-      className="w-full h-full object-cover"
-      src="/images/gov-building.png"
-    />
-    <div className="absolute inset-0 bg-gradient-to-l from-slate-900/95 via-primary-darker/85 to-primary/40"></div>
-  </div>
+        <section className="relative overflow-hidden py-24 px-6 text-center">
+          <div className="absolute inset-0">
+            <img
+              alt=""
+              className="w-full h-full object-cover"
+              src="/images/gov-building.png"
+            />
+            <div className="absolute inset-0 bg-gradient-to-l from-slate-900/95 via-primary-darker/85 to-primary/40"></div>
+          </div>
 
-  <div className="max-w-3xl mx-auto relative">
-    <div className="inline-flex items-center gap-2 bg-teal-400/10 text-teal-300 px-4 py-2 rounded-full text-sm font-bold mb-8 border border-teal-400/30 backdrop-blur mx-auto">
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="w-4 h-4"
-    aria-hidden="true"
-  >
-    <line x1="3" x2="21" y1="22" y2="22"></line>
-    <line x1="6" x2="6" y1="18" y2="11"></line>
-    <line x1="10" x2="10" y1="18" y2="11"></line>
-    <line x1="14" x2="14" y1="18" y2="11"></line>
-    <line x1="18" x2="18" y1="18" y2="11"></line>
-    <polygon points="12 2 20 7 4 7"></polygon>
-  </svg>
-  محافظة القليوبية — مشروع التحول الرقمي
-</div>
+          <div className="max-w-3xl mx-auto relative">
+            <div className="inline-flex items-center gap-2 bg-teal-400/10 text-teal-300 px-4 py-2 rounded-full text-sm font-bold mb-8 border border-teal-400/30 backdrop-blur mx-auto">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="w-4 h-4"
+                aria-hidden="true"
+              >
+                <line x1="3" x2="21" y1="22" y2="22"></line>
+                <line x1="6" x2="6" y1="18" y2="11"></line>
+                <line x1="10" x2="10" y1="18" y2="11"></line>
+                <line x1="14" x2="14" y1="18" y2="11"></line>
+                <line x1="18" x2="18" y1="18" y2="11"></line>
+                <polygon points="12 2 20 7 4 7"></polygon>
+              </svg>
+              محافظة القليوبية — مشروع التحول الرقمي
+            </div>
 
-    <h2 className="text-4xl md:text-5xl font-black leading-tight mb-6">
-      <span className="block text-white">ابدأ في تحسين</span>
-      <span className="block text-primary">محيطك اليوم</span>
-    </h2>
+            <h2 className="text-4xl md:text-5xl font-black leading-tight mb-6">
+              <span className="block text-white">ابدأ في تحسين</span>
+              <span className="block text-primary">محيطك اليوم</span>
+            </h2>
 
-    <p className="text-lg text-slate-300 leading-relaxed mb-10 max-w-xl mx-auto">
-      انضم لآلاف مواطني القليوبية الذين يساهمون في بناء محافظة أفضل. صوتك
-      يُحدث فرقاً حقيقياً.
-    </p>
+            <p className="text-lg text-slate-300 leading-relaxed mb-10 max-w-xl mx-auto">
+              انضم لآلاف مواطني القليوبية الذين يساهمون في بناء محافظة أفضل.
+              صوتك يُحدث فرقاً حقيقياً.
+            </p>
 
-    <div className="flex flex-col sm:flex-row items-center gap-4 justify-center">
-      <Link to="/register" className="w-full sm:w-auto px-8 py-4 text-lg font-bold text-white border border-white/30 rounded-xl hover:bg-white/10 transition-colors backdrop-blur text-center">
-        ابدأ الان
-      </Link>
-      <a
-        href="/about"
-        className="w-full sm:w-auto px-8 py-4 text-lg font-bold text-white border border-white/30 rounded-xl hover:bg-white/10 transition-colors backdrop-blur text-center"
-      >
-        تعرّف على المشروع
-      </a>
-    </div>
-  </div>
-</section>
-       <Footer />
+            <div className="flex flex-col sm:flex-row items-center gap-4 justify-center">
+              <Link
+                to="/register"
+                className="w-full sm:w-auto px-8 py-4 text-lg font-bold text-white border border-white/30 rounded-xl hover:bg-white/10 transition-colors backdrop-blur text-center"
+              >
+                ابدأ الان
+              </Link>
+              <a
+                href="/about"
+                className="w-full sm:w-auto px-8 py-4 text-lg font-bold text-white border border-white/30 rounded-xl hover:bg-white/10 transition-colors backdrop-blur text-center"
+              >
+                تعرّف على المشروع
+              </a>
+            </div>
+          </div>
+        </section>
+        <Footer />
       </div>
       <div
         role="region"
@@ -1014,15 +1023,16 @@ const Landing = () => {
           tabIndex="-1"
           className="fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]"
         ></ol>
-         
       </div>
       <AuthRequiredModal
         isOpen={showAuthModal}
         onClose={() => setShowAuthModal(false)}
-        onLogin={() => navigate("/login")}
+        onLogin={() =>
+          navigate("/login", { state: { from: { pathname: "/report" } } })
+        }
       />
     </>
   );
 };
 
-export default Landing; 
+export default Landing;

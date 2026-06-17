@@ -30,3 +30,6 @@
   --color-warning: #D97706;
   --color-info:    #2563EB;
 }
+body {
+  font-family: var(--font-main);
+}
