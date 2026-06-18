@@ -21,11 +21,11 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-        const isLoginRequest = error.config?.url?.includes('/auth/login');
+    const isLoginRequest = error.config?.url?.includes('/auth/login');
     const isRegisterRequest = error.config?.url?.includes('/auth/register');
+    const isMeRequest = error.config?.url?.includes('/auth/me');
 
-    if (error.response?.status === 401 && !isLoginRequest && !isRegisterRequest) {
- 
+    if (error.response?.status === 401 && !isLoginRequest && !isRegisterRequest && !isMeRequest) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       window.location.href = '/login';

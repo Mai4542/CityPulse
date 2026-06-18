@@ -127,8 +127,8 @@ const ReportForm = () => {
 
   return (
     <div dir="rtl" className="min-h-screen bg-slate-50">
-      <header className="bg-white border-b border-slate-100 sticky top-0 z-20 shadow-sm">
-        <div className="max-w-3xl mx-auto px-4 h-16 flex items-center gap-4">
+<header className="bg-white border-b border-slate-100 sticky top-0 z-[1100] shadow-sm">
+          <div className="max-w-3xl mx-auto px-4 h-16 flex items-center gap-4">
           <button onClick={handleBack} className="text-slate-500 hover:text-slate-800 transition-colors">
             <svg
               xmlns="http://www.w3.org/2000/svg"

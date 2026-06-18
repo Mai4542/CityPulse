@@ -47,7 +47,7 @@ const Step1Location = ({ formData, updateForm, onNext }) => {
     <>
     
       <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
-        <div className="relative">
+        <div className="relative overflow-hidden">
           <LocationMap
             lat={formData.lat}
             lng={formData.lng}
@@ -55,7 +55,7 @@ const Step1Location = ({ formData, updateForm, onNext }) => {
             shouldRecenter={recenterTrigger}
           />
 
-          <div className="absolute top-3 left-3 flex gap-2 z-[1000]">
+          <div className="absolute top-3 right-3 flex gap-2 z-1000">
             <button
               onClick={handleUseCurrentLocation}
               className={`shadow-sm rounded-lg px-3 py-1.5 text-xs font-black flex items-center gap-1 transition-colors ${
