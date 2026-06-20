@@ -8,6 +8,7 @@ import TrackReport from "./pages/TrackReport";
 import UserDashboard from "./pages/UserDashboard"; 
 import Analytics from "./pages/Analytics";
 import ReportForm from "./pages/ReportForm";
+import FAQ from "./pages/FAQ";
 import ProtectedRoute from "./routes/ProtectedRoute";
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
         <Route path="/login"    element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/track"    element={<TrackReport />} />
+        <Route path="/faq"      element={<FAQ />} />
 
         <Route element={<ProtectedRoute />}>
           <Route path="/dashboard" element={<UserDashboard />} />

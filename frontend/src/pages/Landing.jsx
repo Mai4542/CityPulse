@@ -53,6 +53,12 @@ const Landing = () => {
               >
                 آراء المواطنين
               </a>
+              <Link
+                to="/faq"
+                className="text-sm font-bold text-slate-600 hover:text-primary transition-colors"
+              >
+                الأسالة الشائعة
+              </Link>
               <a
                 href="#"
                 className="text-sm font-bold text-slate-600 hover:text-primary transition-colors"
