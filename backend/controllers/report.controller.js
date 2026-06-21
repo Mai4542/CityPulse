@@ -3,9 +3,12 @@ const Report = require('../models/Report');
 const calculatePriority = require('../utils/priorityScore');
 const AppError = require('../utils/AppError');
 
-
 exports.createReport = async (req, res, next) => {
+  
   try {
+    if (req.user.role === 'admin') {
+      return next(new AppError('الأدمن لا يمكنه إنشاء بلاغات', 403));
+    }
     const {
       description,
       category,
@@ -72,7 +75,6 @@ exports.getMyReports = async (req, res, next) => {
   }
 };
 
-
 exports.getReportById = async (req, res, next) => {
   try {
     const report = await Report.findById(req.params.id)
@@ -96,7 +98,6 @@ exports.getReportById = async (req, res, next) => {
   }
 };
 
-
 exports.getAllReports = async (req, res, next) => {
   try {
     const reports = await Report.find()
@@ -107,6 +108,60 @@ exports.getAllReports = async (req, res, next) => {
       success: true,
       count: reports.length,
       data: reports,
+    });
+
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.updateReportStatus = async (req, res, next) => {
+  try {
+    const { status, note, assignedTo } = req.body;
+
+    const STATUS_FLOW = {
+      Open: ['Assigned'],
+      Assigned: ['In Progress'],
+      'In Progress': ['Fixed'],
+      Fixed: ['Closed'],
+      Closed: [],
+    };
+
+    const validStatuses = Object.keys(STATUS_FLOW);
+    if (!validStatuses.includes(status)) {
+      return next(new AppError('حالة البلاغ غير صحيحة', 400));
+    }
+
+    const report = await Report.findById(req.params.id);
+    if (!report) {
+      return next(new AppError('البلاغ غير موجود', 404));
+    }
+
+    const allowedNext = STATUS_FLOW[report.status];
+    if (!allowedNext.includes(status)) {
+      return next(
+        new AppError(
+          `لا يمكن تغيير الحالة من "${report.status}" إلى "${status}" مباشرة`,
+          400
+        )
+      );
+    }
+
+    report.status = status;
+    if (assignedTo) report.assignedTo = assignedTo;
+
+    report.statusHistory.push({
+      status,
+      changedBy: req.user.id,
+      note: note || `تم تغيير الحالة إلى ${status}`,
+    });
+
+    await report.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'تم تحديث حالة البلاغ بنجاح',
+      data: report,
     });
 
   } catch (error) {

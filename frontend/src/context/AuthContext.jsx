@@ -1,4 +1,4 @@
-import React, { createContext,  useState, useEffect } from 'react';
+import  { createContext,  useState, useEffect } from 'react';
 import { authAPI } from '../api/api';
 
 
@@ -66,8 +66,8 @@ export const AuthProvider = ({ children }) => {
     } finally {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      setUser(null);
-      window.location.href = '/login';
+     
+      window.location.href = '/';
     }
   };
 

@@ -2,12 +2,12 @@ import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
 
 export default function ProtectedRoute() {
-  const { user } = useAuth(); // عدّل "user" حسب اسم المتغير الفعلي عندك
+  const { user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
   const handleClose = () => {
-    // يرجعه للصفحة اللي كان فيها، أو الرئيسية لو مفيش صفحة سابقة
+  
     navigate("/");
   };
 
@@ -20,7 +20,7 @@ export default function ProtectedRoute() {
       <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center px-4 z-50">
         <div className="relative bg-[#0c2438] border border-white/10 rounded-2xl p-6 max-w-sm w-full text-center space-y-4 shadow-2xl">
           
-          {/* زرار الإكس */}
+          
           <button
             onClick={handleClose}
             className="absolute top-3 right-3 text-white/50 hover:text-white transition"

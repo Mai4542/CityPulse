@@ -11,5 +11,6 @@ router.get('/:id', protect, reportController.getReportById);
 
 
 router.get('/', protect, restrictTo('admin'), reportController.getAllReports);
+router.patch('/:id/status', protect, restrictTo('admin'), reportController.updateReportStatus);
 
 module.exports = router;
