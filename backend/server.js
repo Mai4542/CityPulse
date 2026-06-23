@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
 const rateLimit = require('express-rate-limit');
 const colors = require('colors');
 
@@ -13,6 +14,10 @@ dotenv.config();
 const authRoutes = require('./routes/authRoutes');
 
 const reportRoutes = require('./routes/report.routes');
+
+const riskRoutes = require('./routes/riskIndex.routes');  
+
+const clusteringRoutes = require('./routes/clustering.routes');
 
 const connectDB = require('./config/database');
 
@@ -39,6 +44,8 @@ app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 app.use(helmet());
 
+app.use(mongoSanitize());
+
 
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
@@ -58,6 +65,10 @@ app.use('/api', limiter);
 app.use('/api/auth', authRoutes);
 
 app.use('/api/reports', reportRoutes);
+
+app.use('/api/risk-index', riskRoutes);
+
+app.use('/api/clustering', clusteringRoutes);
 
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'OK', message: 'Server is running' });

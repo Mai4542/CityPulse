@@ -9,7 +9,8 @@ import UserDashboard from "./pages/UserDashboard";
 import Analytics from "./pages/Analytics";
 import ReportForm from "./pages/ReportForm";
 import ProtectedRoute from "./routes/ProtectedRoute";
-
+import FAQ from "./pages/FAQ";
+import ContactUs from "./pages/ContactUs";
 function App() {
   const { loading } = useAuth();
 
@@ -29,7 +30,8 @@ function App() {
         <Route path="/login"    element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/track"    element={<TrackReport />} />
-
+        <Route path="/faq"      element={<FAQ />} />
+        <Route path="/contact" element={<ContactUs />} />
         <Route element={<ProtectedRoute />}>
           <Route path="/dashboard" element={<UserDashboard />} />
           <Route path="/report"    element={<ReportForm />} />

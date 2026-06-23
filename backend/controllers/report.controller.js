@@ -4,7 +4,7 @@ const calculatePriority = require('../utils/priorityScore');
 const AppError = require('../utils/AppError');
 
 exports.createReport = async (req, res, next) => {
-  
+
   try {
     if (req.user.role === 'admin') {
       return next(new AppError('الأدمن لا يمكنه إنشاء بلاغات', 403));
@@ -161,6 +161,91 @@ exports.updateReportStatus = async (req, res, next) => {
     res.status(200).json({
       success: true,
       message: 'تم تحديث حالة البلاغ بنجاح',
+      data: report,
+    });
+
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.deleteReport = async (req, res, next) => {
+  try {
+    const report = await Report.findById(req.params.id);
+
+    if (!report) {
+      return next(new AppError('البلاغ غير موجود', 404));
+    }
+
+    const isOwner = report.userId.toString() === req.user.id;
+    const isAdmin = req.user.role === 'admin';
+
+    if (!isOwner && !isAdmin) {
+      return next(new AppError('مش مسموحلك تحذف البلاغ ده', 403));
+    }
+
+    if (isOwner && !isAdmin && report.status !== 'Open') {
+      return next(
+        new AppError('لا يمكن حذف البلاغ بعد أن بدأ العمل عليه، تواصل مع الإدارة', 400)
+      );
+    }
+
+    if (report.images && report.images.length > 0) {
+      report.images.forEach((imageUrl) => {
+        const publicId = imageUrl.split('/').slice(-2).join('/').split('.')[0];
+        cloudinary.uploader.destroy(publicId).catch(() => {});
+      });
+    }
+
+    await report.deleteOne();
+
+    res.status(200).json({
+      success: true,
+      message: 'تم حذف البلاغ بنجاح',
+    });
+
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.rateReport = async (req, res, next) => {
+  try {
+    const { score, comment } = req.body;
+
+    if (!score || score < 1 || score > 5) {
+      return next(new AppError('التقييم يجب أن يكون رقم من 1 إلى 5', 400));
+    }
+
+    const report = await Report.findById(req.params.id);
+
+    if (!report) {
+      return next(new AppError('البلاغ غير موجود', 404));
+    }
+
+    if (report.userId.toString() !== req.user.id) {
+      return next(new AppError('مش مسموحلك تقيّم البلاغ ده', 403));
+    }
+
+    if (report.status !== 'Closed') {
+      return next(new AppError('لا يمكن التقييم إلا بعد إغلاق البلاغ', 400));
+    }
+
+    if (report.rating.score) {
+      return next(new AppError('تم تقييم هذا البلاغ من قبل', 400));
+    }
+
+    report.rating = {
+      score,
+      comment: comment || null,
+      ratedAt: Date.now(),
+    };
+
+    await report.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'تم إرسال التقييم بنجاح',
       data: report,
     });
 
