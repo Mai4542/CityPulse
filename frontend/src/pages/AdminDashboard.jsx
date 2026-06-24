@@ -6,7 +6,7 @@ import UrbanRiskIndicator from '../components/common/UrbanRiskIndicator'
 
 export default function AdminDashboard() {
   return (
-    <div className="flex flex-row-reverse h-screen overflow-hidden">
+    <div className="flex flex-row-reverse h-screen overflow-hidden relative">
 
       <Sidebar />
 
@@ -16,7 +16,7 @@ export default function AdminDashboard() {
         <main className="p-6 flex flex-col gap-6 flex-1 overflow-auto">
           <StatsCards />
 
-          <div className="grid grid-cols-3 gap-6 flex-1 min-h-0">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1 min-h-0">
             <div className="col-span-2 flex flex-col">
               <ReportsTable />
             </div>
