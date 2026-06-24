@@ -11,6 +11,7 @@ import ReportForm from "./pages/ReportForm";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import FAQ from "./pages/FAQ";
 import ContactUs from "./pages/ContactUs";
+import AdminDashboard from "./pages/AdminDashboard";
 function App() {
   const { loading } = useAuth();
 
@@ -32,6 +33,7 @@ function App() {
         <Route path="/track"    element={<TrackReport />} />
         <Route path="/faq"      element={<FAQ />} />
         <Route path="/contact" element={<ContactUs />} />
+        <Route path="/admin_dashboard" element={<AdminDashboard />} />
         <Route element={<ProtectedRoute />}>
           <Route path="/dashboard" element={<UserDashboard />} />
           <Route path="/report"    element={<ReportForm />} />
