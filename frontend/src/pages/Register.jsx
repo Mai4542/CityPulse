@@ -381,7 +381,8 @@ export default function Register() {
           className="hidden md:flex flex-col items-start text-right space-y-6 w-full max-w-[550px] md:justify-self-end md:-mr-26 relative"
           dir="rtl"
         >
-          <div
+          <Link
+            to="/"
             className="absolute -top-6 right-0 flex flex-row items-center gap-3 select-none"
             dir="rtl"
           >
@@ -396,7 +397,7 @@ export default function Register() {
                 محافظة القليوبية
               </p>
             </div>
-          </div>
+          </Link>
 
           <div className="space-y-2 w-full mt-36">
             <h2 className="text-4xl font-extrabold text-white leading-tight">

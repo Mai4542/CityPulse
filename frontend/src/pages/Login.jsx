@@ -195,13 +195,13 @@ export default function Login() {
         </div>
 
         <div className="hidden md:flex flex-col items-start text-right space-y-6 w-full max-w-[550px] md:justify-self-end md:-mr-26 relative" dir="rtl">
-          <div className="absolute -top-6 right-0 flex flex-row items-center gap-3 select-none" dir="rtl">
+          <Link to="/" className="absolute -top-6 right-0 flex flex-row items-center gap-3 select-none" dir="rtl">
             <div className="bg-primary text-white font-bold p-1 rounded-2xl text-base flex items-center justify-center min-w-[46px] h-[46px] shadow-sm">CP</div>
             <div className="flex flex-col text-right">
               <h1 className="text-lg font-bold tracking-wide leading-none">CityPulse</h1>
               <p className="text-xs text-primary mt-1 font-medium">محافظة القليوبية</p>
             </div>
-          </div>
+          </Link>
 
           <div className="space-y-2 w-full mt-36">
             <h2 className="text-4xl font-extrabold text-white leading-tight">
