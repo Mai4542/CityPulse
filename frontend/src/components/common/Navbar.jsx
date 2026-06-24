@@ -23,18 +23,18 @@ export default function Navbar() {
         
 
         {/* Search */}
-        <div className="relative">
-          <SearchIcon className="absolute right-3 top-2.5 text-gray-400" fontSize="small" />
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="بحث برقم البلاغ، المنطقة..."
-            className="bg-gray-100 rounded-lg pr-10 pl-4 py-2 text-sm w-72 outline-none transition"
-            onFocus={e => e.target.style.outline = '2px solid var(--color-primary)'}
-            onBlur={e => e.target.style.outline = 'none'}
-          />
-        </div>
+               <div className="relative hidden sm:block">
+        <SearchIcon className="absolute right-3 top-2.5 text-gray-400" fontSize="small" />
+        <input
+        type="text"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        placeholder="بحث برقم البلاغ، المنطقة..."
+        className="bg-gray-100 rounded-lg pr-10 pl-4 py-2 text-sm w-48 md:w-72 outline-none transition"
+        onFocus={e => e.target.style.outline = '2px solid var(--color-primary)'}
+        onBlur={e => e.target.style.outline = 'none'}
+        />
+       </div>
 
 
         {/* Notifications */}

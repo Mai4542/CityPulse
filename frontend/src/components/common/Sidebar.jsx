@@ -4,17 +4,27 @@ import ArticleIcon from '@mui/icons-material/Article'
 import MapIcon from '@mui/icons-material/Map'
 import GroupsIcon from '@mui/icons-material/Groups'
 import SettingsIcon from '@mui/icons-material/Settings'
-
+import MenuIcon from '@mui/icons-material/Menu'
+import CloseIcon from '@mui/icons-material/Close'
+import { useNavigate, useLocation } from 'react-router-dom'
 const navItems = [
   { icon: <BarChartIcon />, label: 'نظرة عامة', path: '/' },
   { icon: <ArticleIcon />,  label: 'إدارة البلاغات', badge: 13, path: '/reports' },
   { icon: <MapIcon />,      label: 'الخريطة الحية', path: '/map' },
   { icon: <GroupsIcon />,   label: 'فرق العمل', path: '/teams' },
   { icon: <SettingsIcon />, label: 'الإعدادات', path: '/settings' },
+  { icon: <BarChartIcon />, label: 'نظرة عامة', path: '/admin' },
+  { icon: <ArticleIcon />,  label: 'إدارة البلاغات', badge: 13, path: '/admin/reports' },
+  { icon: <MapIcon />,      label: 'الخريطة الحية', path: '/admin/map' },
+  { icon: <GroupsIcon />,   label: 'فرق العمل', path: '/admin/teams' },
+  { icon: <SettingsIcon />, label: 'الإعدادات', path: '/admin/settings' },
 ]
 
 export default function Sidebar() {
-  const [active, setActive] = useState('/')
+    const [active, setActive] = useState('/')
+  const navigate = useNavigate()
+  const location = useLocation()
+  const [isOpen, setIsOpen] = useState(false)
 
   return (
     <div className="w-64 bg-gray-900 text-white flex flex-col h-screen shrink-0">
