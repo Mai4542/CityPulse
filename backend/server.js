@@ -15,6 +15,8 @@ const authRoutes = require('./routes/authRoutes');
 
 const reportRoutes = require('./routes/report.routes');
 
+const adminRoutes = require('./routes/adminRoutes');
+
 const riskRoutes = require('./routes/riskIndex.routes');  
 
 const clusteringRoutes = require('./routes/clustering.routes');
@@ -65,6 +67,8 @@ app.use('/api', limiter);
 app.use('/api/auth', authRoutes);
 
 app.use('/api/reports', reportRoutes);
+
+app.use('/api/admin', adminRoutes); 
 
 app.use('/api/risk-index', riskRoutes);
 

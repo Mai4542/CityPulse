@@ -1,26 +1,48 @@
 import BarChartIcon from "@mui/icons-material/BarChart";
 import ArticleIcon from "@mui/icons-material/Article";
 import MapIcon from "@mui/icons-material/Map";
-import GroupsIcon from "@mui/icons-material/Groups";
 import SettingsIcon from "@mui/icons-material/Settings";
 import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate, useLocation } from "react-router-dom";
+import { AuthContext } from '../../context/AuthContext';
+import { useContext } from 'react';
+import Avatar from '@mui/material/Avatar';
 
 const navItems = [
-  { icon: <BarChartIcon />, label: "نظرة عامة", path: "/admin" },
+  { icon: <BarChartIcon />, label: "نظرة عامة", path: "/admin-dashboard" },
   { icon: <ArticleIcon />, label: "إدارة البلاغات", badge: 13, path: "/admin/reports" },
   { icon: <MapIcon />, label: "الخريطة الحية", path: "/admin/map" },
-  { icon: <GroupsIcon />, label: "فرق العمل", path: "/admin/teams" },
   { icon: <SettingsIcon />, label: "الإعدادات", path: "/admin/settings" },
 ];
 
 export default function Sidebar({ isOpen, setIsOpen }) {
   const navigate = useNavigate();
   const location = useLocation();
+  const { user } = useContext(AuthContext);
+
+  const getFullName = () => {
+    if (!user) return 'أدمن';
+    if (user.firstName && user.lastName) {
+      return `${user.firstName} ${user.lastName}`;
+    }
+    return user.firstName || user.lastName || 'أدمن';
+  };
+
+  const getRole = () => {
+    if (!user) return 'مدير غرفة العمليات';
+    if (user.role === 'admin') return 'مدير النظام';
+    return 'مدير غرفة العمليات';
+  };
+
+  const getInitials = () => {
+    if (!user) return 'أ';
+    if (user.firstName) return user.firstName.charAt(0);
+    if (user.lastName) return user.lastName.charAt(0);
+    return 'أ';
+  };
 
   return (
     <>
- 
       {isOpen && (
         <div
           className="fixed inset-0 bg-black/50 z-20 lg:hidden"
@@ -28,42 +50,38 @@ export default function Sidebar({ isOpen, setIsOpen }) {
         />
       )}
 
-    
       <div
-      dir="rtl"
+        dir="rtl"
         className={`
           fixed lg:static inset-y-0 right-0 z-30
           bg-gray-900 text-white flex flex-col h-screen shrink-0
-          transition-transform duration-300 w-64
+          transition-transform duration-300 w-64 lg:pt-0 pt-[72px]
           ${isOpen ? "translate-x-0" : "translate-x-full lg:translate-x-0"}
         `}
       >
-      
-        <div className="p-4 border-b border-gray-700 flex items-center justify-between">
-          <div className="flex items-center gap-3">
+        <div className="p-3 sm:p-4 border-b border-gray-700 flex items-center justify-between shrink-0 hidden lg:flex">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
             <div
-              className="w-10 h-10 rounded-lg flex items-center justify-center font-bold text-lg text-white shrink-0"
+              className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center font-bold text-sm sm:text-lg text-white shrink-0"
               style={{ backgroundColor: "var(--color-primary)" }}
             >
               C
             </div>
-            <div>
-              <div className="font-bold text-sm whitespace-nowrap">نبض المدينة</div>
+            <div className="min-w-0">
+              <div className="font-bold text-xs sm:text-sm whitespace-nowrap">نبض المدينة</div>
               <div className="text-xs text-gray-400 whitespace-nowrap">لوحة القيادة</div>
             </div>
           </div>
 
-       
           <button
             onClick={() => setIsOpen(false)}
-            className="text-gray-400 hover:text-white transition lg:hidden"
+            className="text-gray-400 hover:text-white transition lg:hidden shrink-0"
           >
-            <CloseIcon />
+            <CloseIcon fontSize="small" />
           </button>
         </div>
 
-        {/* Nav */}
-        <nav className="flex-1 p-3 space-y-1">
+        <nav className="flex-1 p-2 sm:p-3 space-y-1 overflow-y-auto">
           {navItems.map((item) => (
             <div
               key={item.path}
@@ -71,25 +89,25 @@ export default function Sidebar({ isOpen, setIsOpen }) {
                 navigate(item.path);
                 setIsOpen(false);
               }}
-              className={`flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer transition-all
+              className={`flex items-center justify-between px-2 sm:px-3 py-2 sm:py-2.5 rounded-lg cursor-pointer transition-all
                 ${
-                  location.pathname === item.path
+                  location.pathname === item.path || item.path === "/admin-dashboard"
                     ? "text-white"
                     : "text-gray-400 hover:bg-gray-800 hover:text-white"
                 }`}
               style={
-                location.pathname === item.path
+                location.pathname === item.path || item.path === "/admin-dashboard"
                   ? { backgroundColor: "var(--color-primary)" }
                   : {}
               }
             >
-              <div className="flex items-center gap-3 text-sm">
-                <span className="shrink-0">{item.icon}</span>
-                <span className="whitespace-nowrap">{item.label}</span>
+              <div className="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm min-w-0">
+                <span className="shrink-0 text-lg sm:text-xl">{item.icon}</span>
+                <span className="whitespace-nowrap truncate">{item.label}</span>
               </div>
               {item.badge && (
                 <span
-                  className="text-white text-xs rounded-full px-2 py-0.5 shrink-0"
+                  className="text-white text-xs rounded-full px-1.5 py-0.5 shrink-0 text-[0.625rem] sm:px-2"
                   style={{ backgroundColor: "var(--color-primary-dark)" }}
                 >
                   {item.badge}
@@ -99,10 +117,29 @@ export default function Sidebar({ isOpen, setIsOpen }) {
           ))}
         </nav>
 
-        {/* User */}
-        <div className="p-4 border-t border-gray-700">
-          <div className="text-sm font-semibold text-white whitespace-nowrap">م. خالد حسن</div>
-          <div className="text-xs text-gray-400 whitespace-nowrap">مدير غرفة العمليات</div>
+        <div className="p-3 sm:p-4 border-t border-gray-700 shrink-0">
+          <div className="flex items-center gap-3">
+            <Avatar 
+              src={user?.avatar} 
+              alt={getFullName()}
+              sx={{ 
+                width: 40, 
+                height: 40,
+                bgcolor: 'var(--color-primary)',
+                fontSize: '1rem'
+              }}
+            >
+              {getInitials()}
+            </Avatar>
+            <div className="flex-1 min-w-0">
+              <div className="text-xs sm:text-sm font-semibold text-white whitespace-nowrap truncate">
+                {getFullName()}
+              </div>
+              <div className="text-xs text-gray-400 whitespace-nowrap truncate">
+                {getRole()}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>

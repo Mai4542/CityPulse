@@ -9,13 +9,14 @@ import UserDashboard from "./pages/UserDashboard";
 import Analytics from "./pages/Analytics";
 import ReportForm from "./pages/ReportForm";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import AdminRoute from "./routes/AdminRoute"; 
 import FAQ from "./pages/FAQ";
 import ContactUs from "./pages/ContactUs";
 import AdminDashboard from "./pages/AdminDashboard";
-function App() {
-  const { loading } = useAuth();
 
-  
+function App() {
+  const { loading, user } = useAuth();
+
   if (loading) {
     return (
       <div className="min-h-screen bg-[#041626] flex items-center justify-center">
@@ -27,18 +28,27 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/"         element={<Landing />} />
-        <Route path="/login"    element={<Login />} />
+        <Route path="/" element={<Landing />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/track"    element={<TrackReport />} />
-        <Route path="/faq"      element={<FAQ />} />
+        <Route path="/track" element={<TrackReport />} />
+        <Route path="/faq" element={<FAQ />} />
         <Route path="/contact" element={<ContactUs />} />
-        <Route path="/admin_dashboard" element={<AdminDashboard />} />
+        
+    
         <Route element={<ProtectedRoute />}>
           <Route path="/dashboard" element={<UserDashboard />} />
-          <Route path="/report"    element={<ReportForm />} />
+          <Route path="/report" element={<ReportForm />} />
           <Route path="/analytics" element={<Analytics />} />
-        </Route>       
+        </Route>
+
+       
+        <Route element={<AdminRoute />}>
+          <Route path="/admin-dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/reports" element={<AdminDashboard />} />
+          <Route path="/admin/map" element={<AdminDashboard />} />
+          <Route path="/admin/settings" element={<AdminDashboard />} />
+        </Route>
 
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

@@ -33,7 +33,7 @@ export default function Login() {
   const location = useLocation();
 
 
-  const from = location.state?.from?.pathname || '/dashboard';
+   const from = location.state?.from?.pathname;
 
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
@@ -42,8 +42,15 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (user) navigate(from);
-  }, [user]);
+    if (user) {
+ 
+      if (user.role === 'admin') {
+        navigate('/admin-dashboard');
+      } else {
+        navigate(from || '/dashboard');
+      }
+    }
+  }, [user, navigate, from]);
 
   const validateEmail = (value) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -74,10 +81,16 @@ export default function Login() {
     if (Object.keys(currentErrors).length > 0) return;
 
     try {
-      setLoading(true);
+       setLoading(true);
+      const userData = await login(email, password);
+      
+     
+      if (userData.role === 'admin') {
+        navigate('/admin-dashboard');
+      } else {
+        navigate(from || '/dashboard');
+      }
 
-      await login(email, password);
-      navigate(from);
 
     } catch (error) {
       setErrors({

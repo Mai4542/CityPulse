@@ -4,7 +4,6 @@ const calculatePriority = require('../utils/priorityScore');
 const AppError = require('../utils/AppError');
 
 exports.createReport = async (req, res, next) => {
-
   try {
     if (req.user.role === 'admin') {
       return next(new AppError('الأدمن لا يمكنه إنشاء بلاغات', 403));
@@ -48,7 +47,6 @@ exports.createReport = async (req, res, next) => {
       message: 'تم إرسال البلاغ بنجاح',
       data: report,
     });
-
   } catch (error) {
     if (req.files && req.files.length > 0) {
       req.files.forEach(file => {
@@ -69,7 +67,6 @@ exports.getMyReports = async (req, res, next) => {
       count: reports.length,
       data: reports,
     });
-
   } catch (error) {
     next(error);
   }
@@ -92,7 +89,6 @@ exports.getReportById = async (req, res, next) => {
       success: true,
       data: report,
     });
-
   } catch (error) {
     next(error);
   }
@@ -100,16 +96,32 @@ exports.getReportById = async (req, res, next) => {
 
 exports.getAllReports = async (req, res, next) => {
   try {
-    const reports = await Report.find()
+    const { status, severity, category, page = 1, limit = 10 } = req.query;
+
+    const filter = {};
+    if (status) filter.status = status;
+    if (severity) filter.severity = severity;
+    if (category) filter.category = category;
+
+    const reports = await Report.find(filter)
       .populate('userId', 'firstName lastName email')
-      .sort({ priorityScore: -1 });
+      .populate('statusHistory.changedBy', 'firstName lastName')
+      .sort({ priorityScore: -1 })
+      .skip((page - 1) * limit)
+      .limit(parseInt(limit));
+
+    const total = await Report.countDocuments(filter);
 
     res.status(200).json({
       success: true,
-      count: reports.length,
       data: reports,
+      pagination: {
+        total,
+        page: parseInt(page),
+        limit: parseInt(limit),
+        totalPages: Math.ceil(total / limit)
+      }
     });
-
   } catch (error) {
     next(error);
   }
@@ -149,6 +161,8 @@ exports.updateReportStatus = async (req, res, next) => {
 
     report.status = status;
     if (assignedTo) report.assignedTo = assignedTo;
+    report.updatedAt = Date.now();
+    if (status === 'Closed' || status === 'Fixed') report.resolvedAt = Date.now();
 
     report.statusHistory.push({
       status,
@@ -163,7 +177,6 @@ exports.updateReportStatus = async (req, res, next) => {
       message: 'تم تحديث حالة البلاغ بنجاح',
       data: report,
     });
-
   } catch (error) {
     next(error);
   }
@@ -177,17 +190,14 @@ exports.deleteReport = async (req, res, next) => {
       return next(new AppError('البلاغ غير موجود', 404));
     }
 
-    const isOwner = report.userId.toString() === req.user.id;
-    const isAdmin = req.user.role === 'admin';
-
-    if (!isOwner && !isAdmin) {
-      return next(new AppError('مش مسموحلك تحذف البلاغ ده', 403));
-    }
-
-    if (isOwner && !isAdmin && report.status !== 'Open') {
-      return next(
-        new AppError('لا يمكن حذف البلاغ بعد أن بدأ العمل عليه، تواصل مع الإدارة', 400)
-      );
+    if (req.user.role !== 'admin') {
+      const isOwner = report.userId.toString() === req.user.id;
+      if (!isOwner) {
+        return next(new AppError('مش مسموحلك تحذف البلاغ ده', 403));
+      }
+      if (report.status !== 'Open') {
+        return next(new AppError('لا يمكن حذف البلاغ بعد أن بدأ العمل عليه، تواصل مع الإدارة', 400));
+      }
     }
 
     if (report.images && report.images.length > 0) {
@@ -203,7 +213,6 @@ exports.deleteReport = async (req, res, next) => {
       success: true,
       message: 'تم حذف البلاغ بنجاح',
     });
-
   } catch (error) {
     next(error);
   }
@@ -248,7 +257,6 @@ exports.rateReport = async (req, res, next) => {
       message: 'تم إرسال التقييم بنجاح',
       data: report,
     });
-
   } catch (error) {
     next(error);
   }

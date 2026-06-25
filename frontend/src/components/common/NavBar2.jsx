@@ -7,18 +7,17 @@ export default function Navbar2({ onMenuToggle }) {
   const [search, setSearch] = useState('')
 
   return (
-<header className="relative z-50 bg-white px-6 py-4 flex flex-row-reverse items-center justify-between shadow-sm shrink-0">
+    <header className="relative z-50 bg-white px-6 py-4 flex flex-row-reverse items-center justify-between shadow-sm shrink-0">
       {/* Title + Menu button (mobile) */}
-      <div className="flex flex-row-reverse items-center gap-3">
+      <div className="flex flex-row-reverse checked: items-center gap-3 cursor-pointer">
         <button
-  onClick={onMenuToggle}
-   className="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg text-white"
-  style={{ backgroundColor: "var(--color-primary)" }}
->
-  <MenuIcon />
-</button>
+          onClick={onMenuToggle}
+          className="lg:hidden cursor-pointer flex items-center justify-center w-10 h-10 rounded-lg text-white"
+          style={{ backgroundColor: "var(--color-primary)" }}
+        >
+          <MenuIcon />
+        </button>
         <div className="text-xl font-bold text-gray-800">محافظة القليوبية</div>
-
       </div>
 
       {/* Search + Notifications + Date */}
