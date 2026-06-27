@@ -6,8 +6,9 @@ import {
   FiSearch, FiFilter, FiUpload, FiLogOut, FiMap, FiBell, FiUser,
   FiCheck, FiAlertTriangle, FiImage, FiVideo, FiMap as FiMapIcon, FiCamera
 } from 'react-icons/fi';
+import Settings from '../components/Settings';
 
-/* ─── بيانات البلاغات ─── */
+ 
 const REPORTS_DATA = [
   {
     id: '#C-٩٠١',
@@ -51,7 +52,7 @@ const REPORTS_DATA = [
   },
 ];
 
-/* ─── ألوان الحالات ─── */
+ 
 const STATUS_STYLES = {
   processing: { bg: 'bg-amber-50', text: 'text-amber-700', dot: 'bg-amber-500', bar: 'bg-amber-500' },
   open: { bg: 'bg-slate-100', text: 'text-slate-600', dot: 'bg-slate-400', bar: 'bg-slate-300' },
@@ -59,16 +60,14 @@ const STATUS_STYLES = {
   assigned: { bg: 'bg-blue-50', text: 'text-blue-700', dot: 'bg-blue-500', bar: 'bg-blue-500' },
 };
 
-/* ═══════════════════════════════════════════════════
-   كارت البلاغ المطابق لـ Replit
-   ═══════════════════════════════════════════════════ */
+ 
 const ReportRow = ({ report }) => {
   const style = STATUS_STYLES[report.statusType] || STATUS_STYLES.open;
 
   return (
     <div className="p-4 hover:bg-slate-50 transition-colors cursor-pointer">
       <div className="flex items-center gap-3">
-        {/* الصورة الوهمية */}
+        { }
         <div className="w-14 h-14 rounded-xl bg-slate-100 flex items-center justify-center shrink-0">
           <FiImage className="w-5 h-5 text-slate-400" />
         </div>
@@ -90,7 +89,7 @@ const ReportRow = ({ report }) => {
             {report.address}
           </p>
 
-          {/* شريط التقدم */}
+          {}
           <div className="flex items-center gap-2">
             <div className="flex-1 h-1.5 bg-slate-100 rounded-full overflow-hidden">
               <div className={`h-full rounded-full ${style.bar}`} style={{ width: `${report.progress}%` }}></div>
@@ -103,9 +102,7 @@ const ReportRow = ({ report }) => {
   );
 };
 
-/* ═══════════════════════════════════════════════════
-   صفحة لوحتي (الرئيسية)
-   ═══════════════════════════════════════════════════ */
+ 
 const DashboardView = ({ setActiveView }) => (
   <div className="space-y-6 animate-in fade-in duration-300">
     <div className="flex items-center justify-between">
@@ -153,7 +150,7 @@ const DashboardView = ({ setActiveView }) => (
     </div>
 
 
-    {/* الزر السفلي (بلاغ جديد) */}
+    {}
     <div className="mt-4">
       <button onClick={() => setActiveView('new-report')} className="block bg-teal-600 hover:bg-teal-700 text-white rounded-2xl p-5 text-right transition-colors shadow-sm w-full">
         <FiPlus className="w-6 h-6 mb-2" />
@@ -164,9 +161,7 @@ const DashboardView = ({ setActiveView }) => (
   </div>
 );
 
-/* ═══════════════════════════════════════════════════
-   صفحة بلاغاتي
-   ═══════════════════════════════════════════════════ */
+ 
 const ReportsView = ({ setActiveView }) => {
   const [search, setSearch] = useState('');
   const filtered = REPORTS_DATA.filter(r => r.title.includes(search) || r.address.includes(search) || r.id.includes(search));
@@ -201,9 +196,7 @@ const ReportsView = ({ setActiveView }) => {
   );
 };
 
-/* ═══════════════════════════════════════════════════
-   صفحة بلاغ جديد (المطابقة 100% لموقع Replit)
-   ═══════════════════════════════════════════════════ */
+ 
 const NewReportView = ({ setActiveView }) => {
   const [step, setStep] = useState(0);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -222,7 +215,7 @@ const NewReportView = ({ setActiveView }) => {
 
   const CITIES = ['قليوب', 'بنها', 'شبرا الخيمة', 'القناطر', 'كفر شكر', 'طوخ'];
 
-  // شاشة النجاح - gradient زي الموقع الأصلي
+  
   if (isSuccess) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-teal-50 to-emerald-50 flex items-center justify-center p-6 -m-4 md:-m-8">
@@ -264,7 +257,7 @@ const NewReportView = ({ setActiveView }) => {
 
   return (
     <div className="space-y-0 animate-in fade-in duration-300 -m-4 md:-m-8">
-      {/* Header ثابت */}
+      { }
       <div className="bg-white border-b border-slate-100 sticky top-0 z-20 shadow-sm">
         <div className="max-w-3xl mx-auto px-4 h-16 flex items-center gap-4">
           <button onClick={() => step > 0 ? setStep(s => s - 1) : setActiveView('dashboard')} className="text-slate-500 hover:text-slate-800 transition-colors">
@@ -275,7 +268,7 @@ const NewReportView = ({ setActiveView }) => {
             <p className="text-xs text-slate-400">محافظة القليوبية — CityPulse</p>
           </div>
         </div>
-        {/* Stepper */}
+        { }
         <div className="max-w-3xl mx-auto px-4 pb-4">
           <div className="flex items-center gap-2">
             {STEPS.map((label, i) => (
@@ -295,10 +288,10 @@ const NewReportView = ({ setActiveView }) => {
 
       <div className="max-w-3xl mx-auto px-4 py-8 pb-24 space-y-6">
 
-        {/* ── Step 0: الموقع والفئة ── */}
+        { }
         {step === 0 && (
           <div className="space-y-6">
-            {/* الخريطة الوهمية - داكنة مع SVG grid زي الموقع */}
+            { }
             <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
               <div className="relative h-56 bg-gradient-to-br from-teal-900 via-teal-800 to-slate-800">
                 <svg className="absolute inset-0 w-full h-full opacity-20" viewBox="0 0 320 224">
@@ -312,19 +305,19 @@ const NewReportView = ({ setActiveView }) => {
                   <rect x="200" y="80" width="70" height="40" fill="#134e4a" rx="2" />
                   <rect x="180" y="140" width="50" height="60" fill="#134e4a" rx="2" />
                 </svg>
-                {/* دبوس الموقع */}
+                 
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-full">
                   <div className="w-8 h-8 bg-red-500 rounded-full border-4 border-white shadow-lg flex items-center justify-center">
                     <div className="w-2 h-2 bg-white rounded-full" />
                   </div>
                   <div className="w-0 h-0 border-x-4 border-x-transparent border-t-8 border-t-red-500 mx-auto" />
                 </div>
-                {/* بطاقة العنوان */}
+              
                 <div className="absolute bottom-3 right-3 bg-white/95 rounded-lg px-3 py-1.5 text-xs font-black text-slate-700 shadow-sm flex items-center gap-1">
                   <FiMapPin className="w-3 h-3 text-teal-600" />
                   شارع السيوف، قليوب
                 </div>
-                {/* زر موقعي الحالي */}
+                
                 <div className="absolute top-3 left-3">
                   <button className="bg-white shadow-sm rounded-lg px-3 py-1.5 text-xs font-black text-teal-700 flex items-center gap-1">
                     <FiMapPin className="w-3.5 h-3.5" />
@@ -332,7 +325,7 @@ const NewReportView = ({ setActiveView }) => {
                   </button>
                 </div>
               </div>
-              {/* input العنوان */}
+             
               <div className="p-4">
                 <label className="block text-sm font-black text-slate-700 mb-2">أو اكتب العنوان يدوياً</label>
                 <div className="flex gap-2">
@@ -344,7 +337,7 @@ const NewReportView = ({ setActiveView }) => {
               </div>
             </div>
 
-            {/* نوع المشكلة */}
+            
             <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6">
               <h2 className="font-black text-slate-800 mb-4">نوع المشكلة</h2>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
@@ -363,7 +356,7 @@ const NewReportView = ({ setActiveView }) => {
           </div>
         )}
 
-        {/* ── Step 1: التفاصيل والصور ── */}
+        
         {step === 1 && (
           <div className="space-y-6">
             <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 space-y-5">
@@ -420,10 +413,10 @@ const NewReportView = ({ setActiveView }) => {
           </div>
         )}
 
-        {/* ── Step 2: المراجعة والإرسال ── */}
+     
         {step === 2 && (
           <div className="space-y-5">
-            {/* كارت أخضر داكن بالأعلى برقم البلاغ */}
+           
             <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
               <div className="bg-teal-700 p-5 text-white">
                 <div className="flex justify-between items-start">
@@ -473,9 +466,7 @@ const NewReportView = ({ setActiveView }) => {
 
 
 
-/* ═══════════════════════════════════════════════════
-   المكون الرئيسي - Dashboard
-   ═══════════════════════════════════════════════════ */
+ 
 export default function Dashboard() {
   const [activeView, setActiveView] = useState('dashboard');
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -483,11 +474,12 @@ export default function Dashboard() {
   const navLinks = [
     { key: 'dashboard', label: 'لوحتي', icon: FiGrid },
     { key: 'reports', label: 'بلاغاتي', icon: FiFileText, badge: '٤' },
+    { key: 'settings', label: 'ملفي', icon: FiUser },
   ];
 
   return (
     <div className="min-h-screen flex bg-[#f8fafc]" dir="rtl" style={{ fontFamily: "'Cairo', sans-serif" }}>
-      {/* Mobile Overlay */}
+    
       {mobileOpen && (
         <div
           className="fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-sm lg:hidden"
@@ -495,7 +487,7 @@ export default function Dashboard() {
         />
       )}
 
-      {/* ═══ Sidebar ═══ */}
+ 
       <aside className={`
         fixed inset-y-0 right-0 z-50 w-64 bg-white border-l border-slate-100 flex flex-col transition-transform duration-300 shadow-2xl lg:shadow-none
         lg:relative lg:translate-x-0
@@ -516,7 +508,7 @@ export default function Dashboard() {
           </button>
         </div>
 
-        {/* صورة المستخدم واسمه (بالشكل الأصلي) */}
+        
         <div className="p-4 border-b border-slate-100">
           <div className="flex items-center gap-3">
             <div className="relative">
@@ -555,8 +547,7 @@ export default function Dashboard() {
             );
           })}
         </nav>
-
-        {/* زر تسجيل الخروج */}
+ 
         <div className="p-4 border-t border-slate-100">
           <button
             className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold text-slate-600 hover:bg-red-50 hover:text-red-600 transition-colors"
@@ -567,8 +558,7 @@ export default function Dashboard() {
           </button>
         </div>
       </aside>
-
-      {/* ═══ Main Content ═══ */}
+ 
       <div className="flex-1 flex flex-col min-w-0 min-h-screen">
         <header className="lg:hidden bg-white border-b border-slate-100 px-4 py-3 flex items-center justify-between sticky top-0 z-30">
           <button onClick={() => setMobileOpen(true)} className="text-slate-600 p-1">
@@ -583,6 +573,7 @@ export default function Dashboard() {
             {activeView === 'dashboard' && <DashboardView setActiveView={setActiveView} />}
             {activeView === 'reports' && <ReportsView setActiveView={setActiveView} />}
             {activeView === 'new-report' && <NewReportView setActiveView={setActiveView} />}
+            {activeView === 'settings' && <Settings />}
           </div>
         </main>
       </div>
