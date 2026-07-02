@@ -7,7 +7,7 @@ import Step1Location from "../components/Step1Location";
 import Step2Details from "../components/Step2Details";
 import Step3Review from "../components/Step3Review";
 
-const ReportForm = () => {
+const ReportForm = ({ onBack }) => {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -71,7 +71,7 @@ const ReportForm = () => {
       formDataToSend.append("location[district]", formData.district);
       formDataToSend.append(
         "location[address]",
-        formData.locationText || formData.resolvedAddress || ""
+        formData.locationText || formData.resolvedAddress || "",
       );
 
       formData.photos.forEach((photo) => {
@@ -110,12 +110,20 @@ const ReportForm = () => {
               <path d="M20 6 9 17l-5-5" />
             </svg>
           </div>
-          <h2 className="text-2xl font-black text-slate-800 mb-2">تم الإرسال بنجاح</h2>
+          <h2 className="text-2xl font-black text-slate-800 mb-2">
+            تم الإرسال بنجاح
+          </h2>
           <p className="text-slate-500 mb-8 font-medium">
             شكراً لك! تم استلام بلاغك وسيقوم الفريق المختص بمراجعته في أقرب وقت.
           </p>
           <button
-            onClick={() => navigate("/dashboard")}
+            onClick={() => {
+              if (onBack) {
+                onBack();
+              } else {
+                navigate("/dashboard");
+              }
+            }}
             className="w-full py-3.5 bg-primary text-white font-black rounded-xl hover:bg-primary-dark transition-colors"
           >
             الذهاب إلى لوحة التحكم
@@ -127,9 +135,12 @@ const ReportForm = () => {
 
   return (
     <div dir="rtl" className="min-h-screen bg-slate-50">
-<header className="bg-white border-b border-slate-100 sticky top-0 z-[1100] shadow-sm">
-          <div className="max-w-3xl mx-auto px-4 h-16 flex items-center gap-4">
-          <button onClick={handleBack} className="text-slate-500 hover:text-slate-800 transition-colors">
+      <header className="bg-white border-b border-slate-100 sticky top-0 z-[1100] shadow-sm">
+        <div className="max-w-3xl mx-auto px-4 h-16 flex items-center gap-4">
+          <button
+            onClick={handleBack}
+            className="text-slate-500 hover:text-slate-800 transition-colors"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -142,12 +153,14 @@ const ReportForm = () => {
               strokeLinejoin="round"
               className="w-5 h-5"
             >
-              <path d="m9 18 6-6-6-6"></path>
+              <path d="m15 18-6-6 6-6"></path>
             </svg>
           </button>
           <div>
             <h1 className="font-black text-slate-900">تقديم بلاغ جديد</h1>
-            <p className="text-xs text-slate-400">محافظة القليوبية — CityPulse</p>
+            <p className="text-xs text-slate-400">
+              محافظة القليوبية — CityPulse
+            </p>
           </div>
         </div>
         <StepIndicator step={step} />
@@ -156,7 +169,11 @@ const ReportForm = () => {
       <main className="max-w-3xl mx-auto px-4 py-8 pb-24">
         <div className="space-y-6">
           {step === 1 && (
-            <Step1Location formData={formData} updateForm={updateForm} onNext={handleNext} />
+            <Step1Location
+              formData={formData}
+              updateForm={updateForm}
+              onNext={handleNext}
+            />
           )}
 
           {step === 2 && (
@@ -211,7 +228,9 @@ const ReportForm = () => {
                 <span className="font-black text-primary-dark">٤٠٪</span>
               </span>
             </div>
-            <p className="text-xs font-black text-slate-400">الخطوة {step} من 3</p>
+            <p className="text-xs font-black text-slate-400">
+              الخطوة {step} من 3
+            </p>
           </div>
         </div>
       )}

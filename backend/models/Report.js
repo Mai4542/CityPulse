@@ -138,10 +138,17 @@ reportSchema.pre('save', function (next) {
 });
 reportSchema.pre('save', async function(next) {
   if (!this.reportNumber) {
-    const count = await mongoose.model('Report').countDocuments();
-    this.reportNumber = `C-${count + 1}`;
+    const lastReport = await mongoose.model('Report')
+      .findOne({})
+      .sort({ createdAt: -1 });
+    
+    const lastNumber = lastReport?.reportNumber 
+      ? parseInt(lastReport.reportNumber.replace('C-', '')) 
+      : 0;
+    
+    this.reportNumber = `C-${lastNumber + 1}`;
   }
   next();
-});
+  });
 
 module.exports = mongoose.model('Report', reportSchema);

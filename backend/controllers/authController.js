@@ -170,7 +170,7 @@ const updatePassword = async (req, res, next) => {
     
     const isPasswordValid = await user.comparePassword(currentPassword);
     if (!isPasswordValid) {
-      return next(new AppError('Current password is incorrect', 401));
+      return next(new AppError('كلمة المرور غير صحيحة', 401));
     }
 
    

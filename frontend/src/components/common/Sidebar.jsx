@@ -59,7 +59,13 @@ export default function Sidebar({ isOpen, setIsOpen }) {
           ${isOpen ? "translate-x-0" : "translate-x-full lg:translate-x-0"}
         `}
       >
-        <div className="p-3 sm:p-4 border-b border-gray-700 flex items-center justify-between shrink-0 hidden lg:flex">
+        <div 
+          className="p-3 sm:p-4 border-b border-gray-700 flex items-center justify-between shrink-0 cursor-pointer hover:bg-gray-800 transition-colors"
+          onClick={() => {
+            setIsOpen(false);
+            navigate('/');
+          }}
+        >
           <div className="flex items-center gap-2 sm:gap-3 min-w-0">
             <div
               className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center font-bold text-sm sm:text-lg text-white shrink-0"
@@ -74,7 +80,10 @@ export default function Sidebar({ isOpen, setIsOpen }) {
           </div>
 
           <button
-            onClick={() => setIsOpen(false)}
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsOpen(false);
+            }}
             className="text-gray-400 hover:text-white transition lg:hidden shrink-0"
           >
             <CloseIcon fontSize="small" />
@@ -90,13 +99,12 @@ export default function Sidebar({ isOpen, setIsOpen }) {
                 setIsOpen(false);
               }}
               className={`flex items-center justify-between px-2 sm:px-3 py-2 sm:py-2.5 rounded-lg cursor-pointer transition-all
-                ${
-                  location.pathname === item.path || item.path === "/admin-dashboard"
+                ${location.pathname === item.path
                     ? "text-white"
                     : "text-gray-400 hover:bg-gray-800 hover:text-white"
                 }`}
               style={
-                location.pathname === item.path || item.path === "/admin-dashboard"
+                location.pathname === item.path
                   ? { backgroundColor: "var(--color-primary)" }
                   : {}
               }

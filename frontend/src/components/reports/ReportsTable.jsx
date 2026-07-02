@@ -1,4 +1,6 @@
-import  { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { FiEye } from 'react-icons/fi';
 
 const statusStyle = {
   'Open': { color: 'var(--color-info)', label: 'مفتوح', dotColor: '#3B82F6' }, 
@@ -37,6 +39,7 @@ const departments = [
 const statusOptions = ['Open', 'Assigned', 'In Progress', 'Fixed', 'Closed'];
 
 export default function ReportsTable({ data = [], onStatusUpdate }) {
+  const navigate = useNavigate(); 
   const [showDropdown, setShowDropdown] = useState(null);
   const [selectedDepartment, setSelectedDepartment] = useState({});
   const [showDepartmentDropdown, setShowDepartmentDropdown] = useState({});
@@ -46,12 +49,9 @@ export default function ReportsTable({ data = [], onStatusUpdate }) {
 
   const reports = Array.isArray(data) ? data : [];
 
-  // ✅ إغلاق الـ Dropdown لما نضغط بره
   useEffect(() => {
     const handleClickOutside = (event) => {
-      // ✅ لو الضغط جوه الـ Dropdown أو على الزر، متقفلش
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        // ✅ لكن لو الضغط على الزر بتاع التلات نقط، متقفلش
         if (buttonRef.current && buttonRef.current.contains(event.target)) {
           return;
         }
@@ -116,13 +116,14 @@ export default function ReportsTable({ data = [], onStatusUpdate }) {
               <th className="pb-3 font-medium text-gray-400 whitespace-nowrap px-2">الأولوية</th>
               <th className="pb-3 font-medium text-gray-400 whitespace-nowrap px-2 hidden md:table-cell">الجهة</th>
               <th className="pb-3 font-medium text-gray-400 whitespace-nowrap px-2">الحالة</th>
+              <th className="pb-3 font-medium text-gray-400 whitespace-nowrap px-2 w-10">عرض</th>
               <th className="pb-3 font-medium w-8">إجراء</th>
             </tr>
           </thead>
           <tbody>
             {reports.length === 0 ? (
               <tr>
-                <td colSpan={7} className="py-8 text-center text-gray-400">
+                <td colSpan={8} className="py-8 text-center text-gray-400">
                   لا توجد بلاغات
                 </td>
               </tr>
@@ -176,6 +177,16 @@ export default function ReportsTable({ data = [], onStatusUpdate }) {
                         <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full inline-block flex-shrink-0" style={{ backgroundColor: status.dotColor }}></span>
                         {status.label}
                       </div>
+                    </td>
+
+                    <td className="py-3 sm:py-4 px-2">
+                      <button
+                        onClick={() => navigate(`/admin/reports/${r._id}`)}
+                        className="text-teal-600 hover:text-teal-700 hover:bg-teal-50 p-1.5 rounded-lg transition-colors"
+                        title="عرض التفاصيل"
+                      >
+                        <FiEye className="w-4 h-4" />
+                      </button>
                     </td>
 
                     <td className="py-3 sm:py-4 px-2">

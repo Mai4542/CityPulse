@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const Step2Details = ({
   formData,
   updateForm,
@@ -6,9 +8,22 @@ const Step2Details = ({
   onNext,
   onBack,
 }) => {
+  const [descError, setDescError] = useState("");
+
+  const handleNext = () => {
+    const desc = formData.description.trim();
+    if (desc.length < 10) {
+      setDescError("يرجى كتابة وصف لا يقل عن ١٠ أحرف حتى نتمكن من معالجة بلاغك");
+      return;
+    }
+    setDescError("");
+    onNext();
+  };
+
+  const canProceed = formData.description.trim().length >= 10;
+
   return (
     <>
-    
       <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 space-y-5 mb-6">
         <h2 className="font-black text-slate-800">وصف المشكلة</h2>
         <div>
@@ -18,13 +33,33 @@ const Step2Details = ({
           <textarea
             rows="4"
             placeholder="مثال: توجد حفرة كبيرة في منتصف الطريق أمام المدرسة تُشكّل خطراً على المارة والسيارات، خاصةً في الليل..."
-            className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-700 placeholder-slate-400 focus:outline-none focus:border-primary resize-none transition-colors"
+            className={`w-full border rounded-xl px-4 py-3 text-sm font-bold text-slate-700 placeholder-slate-400 focus:outline-none resize-none transition-colors ${
+              descError
+                ? "border-red-300 focus:border-red-400 bg-red-50"
+                : "border-slate-200 focus:border-primary"
+            }`}
             value={formData.description}
-            onChange={(e) => updateForm("description", e.target.value)}
-          ></textarea>
+            onChange={(e) => {
+              updateForm("description", e.target.value);
+              if (e.target.value.trim().length >= 10) setDescError("");
+            }}
+          />
           <div className="flex justify-between mt-1">
-            <p className="text-xs font-bold text-slate-400">وصف تفصيلي يسرّع المعالجة</p>
-            <p className="text-xs font-bold text-slate-400">
+            {descError ? (
+              <p className="text-xs font-bold text-red-500 flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M12 3a9 9 0 100 18A9 9 0 0012 3z" />
+                </svg>
+                {descError}
+              </p>
+            ) : (
+              <p className="text-xs font-bold text-slate-400">
+                {formData.description.trim().length < 10
+                  ? `${10 - formData.description.trim().length} أحرف متبقية للحد الأدنى`
+                  : "وصف تفصيلي يسرّع المعالجة ✓"}
+              </p>
+            )}
+            <p className="text-xs font-bold text-slate-400 shrink-0 mr-2">
               {formData.description.length} / ٥٠٠
             </p>
           </div>
@@ -52,7 +87,6 @@ const Step2Details = ({
         </div>
       </div>
 
-     
       <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 mb-6">
         <div className="flex justify-between items-center mb-4">
           <h2 className="font-black text-slate-800">الصور والمرفقات</h2>
@@ -88,7 +122,6 @@ const Step2Details = ({
           />
         </label>
 
-       
         <div className="grid grid-cols-3 gap-2">
           {formData.photos.map((photo, index) => (
             <div key={index} className="relative h-20 rounded-xl overflow-hidden group">
@@ -142,8 +175,8 @@ const Step2Details = ({
           رجوع
         </button>
         <button
-          onClick={onNext}
-          disabled={!formData.description.trim()}
+          onClick={handleNext}
+          disabled={!canProceed}
           className="flex-1 py-4 text-base font-black text-white bg-primary hover:bg-primary-dark rounded-2xl transition-colors shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
         >
           التالي — مراجعة البلاغ

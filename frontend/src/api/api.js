@@ -18,14 +18,20 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    const isLoginRequest = error.config?.url?.includes('/auth/login');
-    const isRegisterRequest = error.config?.url?.includes('/auth/register');
-    const isMeRequest = error.config?.url?.includes('/auth/me');
-
-    if (error.response?.status === 401 && !isLoginRequest && !isRegisterRequest && !isMeRequest) {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      window.location.href = '/login';
+    if (error.response?.status === 401) {
+      const url = error.config?.url || '';
+      
+      const isAuthOperation = 
+        url.includes('/auth/login') ||
+        url.includes('/auth/register') ||
+        url.includes('/auth/update-password') ||
+        url.includes('/auth/update-me');
+      
+      if (!isAuthOperation) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        window.location.href = '/login';
+      }
     }
     return Promise.reject(error);
   }
@@ -43,6 +49,12 @@ export const authAPI = {
 
   logout: () =>
     api.post('/auth/logout'),
+
+  updateMe: (userData) =>
+    api.patch('/auth/update-me', userData),
+
+  updatePassword: (currentPassword, newPassword) =>
+    api.patch('/auth/update-password', { currentPassword, newPassword }),
 };
 
 export const reportAPI = {
@@ -56,23 +68,21 @@ export const reportAPI = {
 
   getReportById: (id) =>
     api.get(`/reports/${id}`),
+
+  deleteReport: (id) =>
+    api.delete(`/reports/${id}`),
+
+  rateReport: (id, score, comment) =>
+    api.patch(`/reports/${id}/rate`, { score, comment }),
 };
 
-
 export const adminAPI = {
-  // Dashboard
   getDashboardStats: () =>
     api.get('/admin/dashboard/stats'),
 
-
   getAllReports: (filters = {}) => {
-    const params = new URLSearchParams({
-      sortBy: 'createdAt',
-      sortOrder: 'desc',
-      ...filters
-    }).toString();
+    const params = new URLSearchParams(filters).toString();
     return api.get(`/admin/reports?${params}`);
-  
   },
 
   getReportDetails: (reportId) =>
@@ -87,7 +97,6 @@ export const adminAPI = {
   deleteReport: (reportId) =>
     api.delete(`/admin/reports/${reportId}`),
 
- 
   getAnalytics: () =>
     api.get('/admin/analytics'),
 

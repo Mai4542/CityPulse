@@ -13,6 +13,7 @@ import AdminRoute from "./routes/AdminRoute";
 import FAQ from "./pages/FAQ";
 import ContactUs from "./pages/ContactUs";
 import AdminDashboard from "./pages/AdminDashboard";
+import ReportDetail from "./pages/ReportDetail";
 
 function App() {
   const { loading, user } = useAuth();
@@ -35,19 +36,19 @@ function App() {
         <Route path="/faq" element={<FAQ />} />
         <Route path="/contact" element={<ContactUs />} />
         
-    
         <Route element={<ProtectedRoute />}>
           <Route path="/dashboard" element={<UserDashboard />} />
           <Route path="/report" element={<ReportForm />} />
           <Route path="/analytics" element={<Analytics />} />
+          <Route path="/reports/:id" element={<ReportDetail />} />
         </Route>
 
-       
         <Route element={<AdminRoute />}>
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/admin/reports" element={<AdminDashboard />} />
           <Route path="/admin/map" element={<AdminDashboard />} />
           <Route path="/admin/settings" element={<AdminDashboard />} />
+          <Route path="/admin/reports/:id" element={<ReportDetail />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/" />} />

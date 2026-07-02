@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/useAuth';
 
@@ -28,29 +28,17 @@ const IconEye = ({ show }) => (
 );
 
 export default function Login() {
-  const { login, user } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
-
-   const from = location.state?.from?.pathname;
+  const from = location.state?.from?.pathname;
 
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (user) {
- 
-      if (user.role === 'admin') {
-        navigate('/admin-dashboard');
-      } else {
-        navigate(from || '/dashboard');
-      }
-    }
-  }, [user, navigate, from]);
 
   const validateEmail = (value) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -81,16 +69,15 @@ export default function Login() {
     if (Object.keys(currentErrors).length > 0) return;
 
     try {
-       setLoading(true);
+      setLoading(true);
+      
       const userData = await login(email, password);
       
-     
       if (userData.role === 'admin') {
-        navigate('/admin-dashboard');
+        navigate('/admin-dashboard', { replace: true });
       } else {
-        navigate(from || '/dashboard');
+        navigate(from || '/dashboard', { replace: true });
       }
-
 
     } catch (error) {
       setErrors({

@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
-
 export const fetchAddressFromCoords = async (lat, lng) => {
   try {
     const res = await fetch(
@@ -17,17 +16,15 @@ export const fetchAddressFromCoords = async (lat, lng) => {
   }
 };
 
-
-const RecenterMap = ({ lat, lng }) => {
+const RecenterMap = ({ lat, lng, recenterTrigger }) => {
   const map = useMap();
   useEffect(() => {
     if (lat && lng) {
       map.flyTo([lat, lng], 17, { duration: 1.2 });
     }
-  }, [lat, lng]);
+  }, [lat, lng, recenterTrigger]);
   return null;
 };
-
 
 const pinIcon = new L.Icon({
   iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
@@ -36,7 +33,6 @@ const pinIcon = new L.Icon({
   iconSize: [25, 41],
   iconAnchor: [12, 41],
 });
-
 
 const ClickHandler = ({ onSelect }) => {
   useMapEvents({
@@ -48,7 +44,6 @@ const ClickHandler = ({ onSelect }) => {
 };
 
 const LocationMap = ({ lat, lng, onLocationChange, shouldRecenter }) => {
-
   const defaultCenter = [30.18, 31.2];
   const center = lat && lng ? [lat, lng] : defaultCenter;
 
@@ -76,7 +71,7 @@ const LocationMap = ({ lat, lng, onLocationChange, shouldRecenter }) => {
           eventHandlers={{ dragend: handleMarkerDrag }}
         />
         <ClickHandler onSelect={onLocationChange} />
-        {shouldRecenter && <RecenterMap lat={lat} lng={lng} />}
+        <RecenterMap lat={lat} lng={lng} recenterTrigger={shouldRecenter} />
       </MapContainer>
     </div>
   );
