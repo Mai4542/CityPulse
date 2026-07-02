@@ -9,6 +9,7 @@ import UserDashboard from "./pages/UserDashboard";
 import Analytics from "./pages/Analytics";
 import ReportForm from "./pages/ReportForm";
 import AdminDashboard from "./pages/AdminDashboard";
+import HeatMapPage from "./pages/HeatMap";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import AdminRoute from "./routes/AdminRoute";
 
@@ -38,7 +39,8 @@ function App() {
         </Route>
 
         <Route element={<AdminRoute />}>
-          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin"     element={<AdminDashboard />} />
+          <Route path="/admin/map" element={<HeatMapPage />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/" />} />

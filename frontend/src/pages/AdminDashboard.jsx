@@ -10,7 +10,7 @@ export default function AdminDashboard() {
 
       <Sidebar />
 
-      <div className="flex-1 flex flex-col overflow-hidden">
+       <div className="flex-1 flex flex-col overflow-hidden mr-16 lg:mr-0">
         <Navbar />
 
         <main className="p-6 flex flex-col gap-6 flex-1 overflow-auto">
