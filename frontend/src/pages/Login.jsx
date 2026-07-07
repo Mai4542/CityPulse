@@ -53,40 +53,47 @@ export default function Login() {
     return '';
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    const currentErrors = {
-      email: validateEmail(email),
-      password: validatePassword(password),
-    };
-
-    Object.keys(currentErrors).forEach(key => {
-      if (!currentErrors[key]) delete currentErrors[key];
-    });
-
-    setErrors(currentErrors);
-    if (Object.keys(currentErrors).length > 0) return;
-
-    try {
-      setLoading(true);
-      
-      const userData = await login(email, password);
-      
-      if (userData.role === 'admin') {
-        navigate('/admin-dashboard', { replace: true });
-      } else {
-        navigate(from || '/dashboard', { replace: true });
-      }
-
-    } catch (error) {
-      setErrors({
-        general: error.response?.data?.message || 'البريد الإلكتروني أو كلمة المرور غير صحيحة.'
-      });
-    } finally {
-      setLoading(false);
-    }
+  const currentErrors = {
+    email: validateEmail(email),
+    password: validatePassword(password),
   };
+
+  Object.keys(currentErrors).forEach(key => {
+    if (!currentErrors[key]) delete currentErrors[key];
+  });
+
+  setErrors(currentErrors);
+  if (Object.keys(currentErrors).length > 0) return;
+
+  try {
+    setLoading(true);
+    
+    const userData = await login(email, password);
+    
+    if (userData.role === 'admin') {
+      navigate('/admin-dashboard', { replace: true });
+    } else {
+      navigate(from || '/dashboard', { replace: true });
+    }
+
+  } catch (error) {
+    const message = error.response?.data?.message || 'البريد الإلكتروني أو كلمة المرور غير صحيحة.';
+    
+   
+    if (message.includes('deactivated')) {
+      setErrors({
+        general: 'تم تعطيل حسابك. يرجى التواصل مع الدعم للمساعدة.'
+      });
+    } else {
+      setErrors({ general: message });
+    }
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="min-h-screen text-white font-main select-none bg-[radial-gradient(circle_at_center,_#0d3d3d_0%,_#072a33_45%,_#041626_100%)] flex items-center justify-center p-4 md:p-10">

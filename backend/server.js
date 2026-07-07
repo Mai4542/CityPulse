@@ -28,6 +28,8 @@ const AppError = require('./utils/AppError');
 
 const { updateAllPriorityScores } = require('./services/priority.service');
 
+const heatmapRoutes = require('./routes/heatmap.routes');
+
 connectDB();
 
 setInterval(async () => {
@@ -74,9 +76,12 @@ app.use('/api/risk-index', riskRoutes);
 
 app.use('/api/clustering', clusteringRoutes);
 
+app.use('/api/heatmap', heatmapRoutes);
+
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'OK', message: 'Server is running' });
 });
+
 
 
 app.all('*', (req, res, next) => {

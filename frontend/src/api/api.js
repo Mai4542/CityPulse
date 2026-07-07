@@ -105,6 +105,12 @@ export const adminAPI = {
 
   toggleUserStatus: (userId, isActive) =>
     api.patch(`/admin/users/${userId}/status`, { isActive }),
+
+   getHeatmapData: (timeRange) =>
+    api.get(`/heatmap/data${timeRange ? `?timeRange=${timeRange}` : ''}`),
+
+   runClustering: () =>
+    api.post('/clustering/run'),
 };
 
 export default api;

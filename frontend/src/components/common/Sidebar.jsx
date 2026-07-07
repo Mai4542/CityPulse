@@ -1,7 +1,8 @@
 import BarChartIcon from "@mui/icons-material/BarChart";
 import ArticleIcon from "@mui/icons-material/Article";
 import MapIcon from "@mui/icons-material/Map";
-import SettingsIcon from "@mui/icons-material/Settings";
+import AccountTreeIcon from "@mui/icons-material/AccountTree";
+import PeopleIcon from "@mui/icons-material/People";
 import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from '../../context/AuthContext';
@@ -10,9 +11,11 @@ import Avatar from '@mui/material/Avatar';
 
 const navItems = [
   { icon: <BarChartIcon />, label: "نظرة عامة", path: "/admin-dashboard" },
-  { icon: <ArticleIcon />, label: "إدارة البلاغات", badge: 13, path: "/admin/reports" },
-  { icon: <MapIcon />, label: "الخريطة الحية", path: "/admin/map" },
-  { icon: <SettingsIcon />, label: "الإعدادات", path: "/admin/settings" },
+  { icon: <ArticleIcon />, label: "إدارة البلاغات", path: "/admin-dashboard/reports" },
+  { icon: <PeopleIcon />, label: "المستخدمين", path: "/admin-dashboard/users" }, 
+  { icon: <AccountTreeIcon />, label: "تجميع البلاغات", path: "/admin-dashboard/clustering" },
+  { icon: <MapIcon />, label: "الخريطة الحية", path: "/admin-dashboard/map" },
+
 ];
 
 export default function Sidebar({ isOpen, setIsOpen }) {
@@ -113,14 +116,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
                 <span className="shrink-0 text-lg sm:text-xl">{item.icon}</span>
                 <span className="whitespace-nowrap truncate">{item.label}</span>
               </div>
-              {item.badge && (
-                <span
-                  className="text-white text-xs rounded-full px-1.5 py-0.5 shrink-0 text-[0.625rem] sm:px-2"
-                  style={{ backgroundColor: "var(--color-primary-dark)" }}
-                >
-                  {item.badge}
-                </span>
-              )}
+              
             </div>
           ))}
         </nav>

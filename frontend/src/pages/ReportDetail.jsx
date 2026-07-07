@@ -6,8 +6,7 @@ import {
 } from 'react-icons/fi';
 import { reportAPI, adminAPI } from '../api/api';
 import { useAuth } from '../context/useAuth';
-import Sidebar from '../components/common/Sidebar';
-import Navbar2 from '../components/common/Navbar2';
+
 import UserSidebar from '../components/common/UserSidebar';
 
 const STATUS_LABELS = {
@@ -262,13 +261,11 @@ const RatingStars = ({ rating, score, comment, onSubmit }) => {
   );
 };
 
-// ✅ بيقبل id و onBack كـ props (من Dashboard) أو بيستخدم useParams (من Router)
 export default function ReportDetail({ id: propId, onBack: propOnBack, isAdmin: propIsAdmin }) {
   const { id: paramId } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
 
-  // ✅ الـ id بييجي من الـ prop لو موجود، وإلا من useParams
   const id = propId || paramId;
 
   const [report, setReport] = useState(null);
@@ -278,7 +275,6 @@ export default function ReportDetail({ id: propId, onBack: propOnBack, isAdmin: 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const fetchReport = async () => {
-    // ✅ لو user لسه بيتحمل، استنى
     if (!id || user === undefined) return;
 
     const adminMode = propIsAdmin ?? (user?.role === 'admin');
@@ -300,7 +296,7 @@ export default function ReportDetail({ id: propId, onBack: propOnBack, isAdmin: 
     }
   };
 
-  // ✅ راقب user عشان نستنى يتحمل، وid عشان لو اتغير
+
   useEffect(() => {
     fetchReport();
   }, [id, user]);
@@ -490,19 +486,19 @@ export default function ReportDetail({ id: propId, onBack: propOnBack, isAdmin: 
     </div>
   );
 
-  // لو بيتستخدم من الـ Dashboard كـ component (propId موجود)، رجّع الـ content بس
+
   if (propId) {
     return content;
   }
 
-  // لو بيتستخدم كـ page مستقلة من الـ Router
+
   return (
     <div className="flex flex-row-reverse h-screen overflow-hidden bg-[#F8FAFC]">
       {isAdmin ? (
         <>
-          <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
+        
           <div className="flex-1 flex flex-col h-full overflow-hidden">
-            <Navbar2 onMenuToggle={() => setIsSidebarOpen((prev) => !prev)} />
+           
             <main className="flex-1 overflow-y-auto px-4 md:px-8 py-6">
               {content}
             </main>

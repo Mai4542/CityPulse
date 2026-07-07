@@ -1,10 +1,29 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import SearchIcon from '@mui/icons-material/Search'
-import NotificationsIcon from '@mui/icons-material/Notifications'
 import MenuIcon from '@mui/icons-material/Menu'
 
 export default function Navbar2({ onMenuToggle }) {
   const [search, setSearch] = useState('')
+  const [currentDate, setCurrentDate] = useState('')
+
+  useEffect(() => {
+    const updateDate = () => {
+      const now = new Date()
+      const options = {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      }
+      const formatted = now.toLocaleDateString('ar-EG', options)
+      setCurrentDate(formatted)
+    }
+
+    updateDate()
+    const interval = setInterval(updateDate, 60000) 
+
+    return () => clearInterval(interval)
+  }, [])
 
   return (
     <header className="relative z-50 bg-white px-6 py-4 flex flex-row-reverse items-center justify-between shadow-sm shrink-0">
@@ -35,15 +54,9 @@ export default function Navbar2({ onMenuToggle }) {
           />
         </div>
 
-        <div className="relative cursor-pointer">
-          <NotificationsIcon className="text-gray-500" />
-          <span className="absolute -top-1 -right-1 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center"
-            style={{ backgroundColor: 'var(--color-danger)' }}>
-            ٣
-          </span>
-        </div>
+     
 
-        <div className="text-sm text-gray-400">الثلاثاء، ١٥ مايو ٢٠٢٤</div>
+        <div className="text-sm text-gray-400 whitespace-nowrap">{currentDate}</div>
       </div>
     </header>
   )

@@ -71,7 +71,10 @@ const Navbar = () => {
             المميزات
           </button>
           <button
-            onClick={() => handleNavClick("testimonials")}
+            onClick={() => {
+              handleNavClick("testimonials")
+              
+            }}
             className="text-sm font-bold text-slate-600 hover:text-primary-dark transition-colors cursor-pointer"
           >
             آراء المواطنين
@@ -79,6 +82,10 @@ const Navbar = () => {
           <Link
             to="/faq"
             className="text-sm font-bold text-slate-600 hover:text-primary-dark transition-colors"
+            onClick={() => {window.scrollTo({
+                top: 0,
+                behavior: 'smooth',
+              });}}
           >
             الأسئلة الشائعة
           </Link>

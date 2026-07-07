@@ -1,20 +1,18 @@
+// pages/admin/AdminDashboard.jsx
 import { useState, useEffect, useCallback } from "react";
-import { adminAPI } from "../api/api";
-import api from "../api/api";
-
-import Sidebar from "../components/common/Sidebar";
-import Navbar2 from "../components/common/Navbar2";
-import StatsCards from "../components/common/StatsCards";
-import ReportsTable from "../components/reports/ReportsTable";
-import UrbanRiskIndicator from "../components/common/UrbanRiskIndicator";
+import { useOutletContext } from "react-router-dom";
+import { adminAPI } from "../../api/api";
+import api from "../../api/api";
+import StatsCards from "../../components/common/StatsCards";
+import ReportsTable from "../../components/reports/ReportsTable";
+import UrbanRiskIndicator from "../../components/common/UrbanRiskIndicator";
 
 export default function AdminDashboard() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const { updating, setUpdating } = useOutletContext();
   const [statsData, setStatsData] = useState(null);
   const [reportsData, setReportsData] = useState([]);
   const [riskData, setRiskData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [updating, setUpdating] = useState(false);
 
   const fetchDashboardData = useCallback(async (showLoading = true) => {
     if (showLoading) {
@@ -29,7 +27,6 @@ export default function AdminDashboard() {
 
       console.log('=== STATS RESPONSE ===', statsRes);
       
-  
       const stats = statsRes.data?.data || statsRes.data || statsRes;
       console.log('=== STATS EXTRACTED ===', stats);
       
@@ -41,7 +38,6 @@ export default function AdminDashboard() {
         resolutionRate: stats.completionRate || 0,
       });
 
- 
       const reportsList = reportsRes.data?.data || reportsRes.data || [];
       console.log('=== REPORTS LIST ===', reportsList);
       console.log('=== REPORTS LENGTH ===', reportsList.length);
@@ -97,61 +93,48 @@ export default function AdminDashboard() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-screen bg-gray-50">
+      <div className="flex items-center justify-center h-full bg-gray-50">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600"></div>
       </div>
     );
   }
   
   return (
-    <div className="flex flex-row-reverse h-screen overflow-hidden relative bg-[#F8FAFC]">
-      {updating && (
-        <div className="fixed inset-0 bg-black/10 z-50 flex items-center justify-center">
-          <div className="bg-white rounded-xl p-4 shadow-lg flex items-center gap-3">
-            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-teal-600"></div>
-            <span className="text-sm text-gray-700">جاري التحديث...</span>
+    <>
+      {/* Desktop Layout */}
+      <div className="hidden lg:flex flex-col h-full overflow-hidden">
+        <div className="px-6 py-6 shrink-0">
+          <StatsCards data={statsData} />
+        </div>
+        
+        <div className="px-6 pb-6 flex-1 overflow-hidden flex flex-row gap-6">
+          <div className="flex-[2] min-w-0 overflow-y-auto">
+            <ReportsTable 
+              data={reportsData} 
+              onStatusUpdate={handleStatusUpdate}
+            />
+          </div>
+          <div className="flex-[1] min-w-0">
+            <UrbanRiskIndicator data={riskData} />
           </div>
         </div>
-      )}
-      
-      <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
-      
-      <div className="flex-1 flex flex-col h-full overflow-hidden">
-        <Navbar2 onMenuToggle={() => setIsSidebarOpen((prev) => !prev)} />
-        
-        <main className="hidden lg:flex flex-col flex-1 h-full overflow-hidden">
-          <div className="px-6 py-6 shrink-0">
-            <StatsCards data={statsData} />
-          </div>
-          
-          <div className="px-6 pb-6 flex-1 overflow-hidden flex flex-row gap-6">
-            <div className="flex-[2] min-w-0 overflow-y-auto">
-              <ReportsTable 
-                data={reportsData} 
-                onStatusUpdate={handleStatusUpdate}
-              />
-            </div>
-            <div className="flex-[1] min-w-0">
-              <UrbanRiskIndicator data={riskData} />
-            </div>
-          </div>
-        </main>
-
-        <main className="lg:hidden flex-1 overflow-y-auto">
-          <div className="px-6 py-6 flex flex-col gap-6">
-            <StatsCards data={statsData} />
-            
-            <div className="flex flex-col gap-6">
-              <ReportsTable 
-                data={reportsData}
-                onStatusUpdate={handleStatusUpdate}
-              />
-              <UrbanRiskIndicator data={riskData} />
-            </div>
-          </div>
-        </main>
       </div>
-    </div>
+
+      {/* Mobile Layout */}
+      <div className="lg:hidden h-full overflow-y-auto">
+        <div className="px-6 py-6 flex flex-col gap-6">
+          <StatsCards data={statsData} />
+          
+          <div className="flex flex-col gap-6">
+            <ReportsTable 
+              data={reportsData}
+              onStatusUpdate={handleStatusUpdate}
+            />
+            <UrbanRiskIndicator data={riskData} />
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
 

@@ -2,6 +2,7 @@ import  { useState } from 'react';
 import Navbar from '../components/common/Navbar';
 import Footer from '../components/common/Footer';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 export default function FAQ() {
   const [activeTab, setActiveTab] = useState('general');
   const [openFaq, setOpenFaq] = useState(null);
@@ -171,9 +172,9 @@ export default function FAQ() {
           
           <div className="inline-flex items-center gap-2 bg-[#12343a]/70 backdrop-blur-md px-5 py-2 rounded-full text-[13px] font-medium mb-7 border border-white/10 transition-all duration-300 group">
             <span className="text-[#00b097] text-[14px] font-bold group-hover:text-white transition-colors duration-300">→</span>
-            <a href="/" className="text-[#00b097] font-semibold group-hover:text-white transition-colors duration-300">
+            <Link to="/" className="text-[#00b097] font-semibold group-hover:text-white transition-colors duration-300">
               العودة للرئيسية
-            </a>
+            </Link>
             
             <svg className="w-3.5 h-3.5 text-[#00b097] group-hover:text-white transition-colors duration-300 mx-0.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
               <circle cx="12" cy="12" r="10" />

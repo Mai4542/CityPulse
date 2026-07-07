@@ -90,20 +90,7 @@ export default function ReportsTable({ data = [], onStatusUpdate }) {
           <h2 className="font-bold text-gray-800 text-lg sm:text-xl">أحدث البلاغات</h2>
           <p className="text-xs sm:text-sm text-gray-400 mt-0.5">البلاغات الواردة التي تتطلب إجراء</p>
         </div>
-        <div className="flex items-center gap-2 flex-wrap">
-          <button className="flex items-center gap-2 border border-gray-200 text-gray-600 text-sm px-4 py-2 rounded-lg hover:bg-gray-50 transition bg-white">
-            تصفية
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" /></svg>
-          </button>
-          <button
-            className="text-sm px-4 py-2 rounded-lg transition font-semibold"
-            style={{ backgroundColor: '#0d9488', color: '#ffffff' }}
-            onMouseEnter={e => e.currentTarget.style.backgroundColor = '#0f766e'}
-            onMouseLeave={e => e.currentTarget.style.backgroundColor = '#0d9488'}
-          >
-            تصدير التقرير
-          </button>
-        </div>
+        
       </div>
 
       <div className="flex-1 min-h-0 overflow-x-auto lg:overflow-y-auto">    
