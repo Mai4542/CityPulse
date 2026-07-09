@@ -4,6 +4,7 @@ const reportController = require('../controllers/report.controller');
 const { protect } = require('../middleware/authMiddleware');
 const upload = require('../middleware/upload.middleware');
 
+
 router.use(protect);
 
 router.post('/', upload.array('images', 5), reportController.createReport);

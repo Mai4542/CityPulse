@@ -26,6 +26,8 @@ const ReportForm = ({ onBack }) => {
     description: "",
     isRecurring: "",
     photos: [],
+  nearHospital: false,  
+  nearSchool: false,
   });
 
   const updateForm = (key, value) => {
@@ -73,6 +75,8 @@ const ReportForm = ({ onBack }) => {
         "location[address]",
         formData.locationText || formData.resolvedAddress || "",
       );
+       formDataToSend.append("nearHospital", formData.nearHospital || false);
+    formDataToSend.append("nearSchool", formData.nearSchool || false);
 
       formData.photos.forEach((photo) => {
         formDataToSend.append("images", photo);

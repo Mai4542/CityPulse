@@ -74,6 +74,7 @@ export const reportAPI = {
 
   rateReport: (id, score, comment) =>
     api.patch(`/reports/${id}/rate`, { score, comment }),
+
 };
 
 export const adminAPI = {

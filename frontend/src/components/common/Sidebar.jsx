@@ -4,18 +4,20 @@ import MapIcon from "@mui/icons-material/Map";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import PeopleIcon from "@mui/icons-material/People";
 import CloseIcon from "@mui/icons-material/Close";
+import LogoutIcon from '@mui/icons-material/Logout';
+import DashboardIcon from '@mui/icons-material/DashboardOutlined'
 import { useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from '../../context/AuthContext';
 import { useContext } from 'react';
 import Avatar from '@mui/material/Avatar';
 
 const navItems = [
-  { icon: <BarChartIcon />, label: "نظرة عامة", path: "/admin-dashboard" },
+  { icon: <DashboardIcon />, label: "نظرة عامة", path: "/admin-dashboard" },
   { icon: <ArticleIcon />, label: "إدارة البلاغات", path: "/admin-dashboard/reports" },
   { icon: <PeopleIcon />, label: "المستخدمين", path: "/admin-dashboard/users" }, 
   { icon: <AccountTreeIcon />, label: "تجميع البلاغات", path: "/admin-dashboard/clustering" },
   { icon: <MapIcon />, label: "الخريطة الحية", path: "/admin-dashboard/map" },
-
+  { icon: <BarChartIcon />, label: "التحليلات", path: "/admin-dashboard/analytics" },
 ];
 
 export default function Sidebar({ isOpen, setIsOpen }) {
@@ -42,6 +44,12 @@ export default function Sidebar({ isOpen, setIsOpen }) {
     if (user.firstName) return user.firstName.charAt(0);
     if (user.lastName) return user.lastName.charAt(0);
     return 'أ';
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    window.location.href = '/';
   };
 
   return (
@@ -93,7 +101,29 @@ export default function Sidebar({ isOpen, setIsOpen }) {
           </button>
         </div>
 
-        <nav className="flex-1 p-2 sm:p-3 space-y-1 overflow-y-auto">
+        <nav className="flex-1 p-2 sm:p-3 space-y-1 overflow-y-auto ">
+          <div className="flex items-center gap-3 border-b border-gray-700 pb-4">
+            <Avatar 
+              src={user?.avatar} 
+              alt={getFullName()}
+              sx={{ 
+                width: 40, 
+                height: 40,
+                bgcolor: 'var(--color-primary)',
+                fontSize: '1rem'
+              }}
+            >
+              {getInitials()}
+            </Avatar>
+            <div className="flex-1 min-w-0">
+              <div className="text-xs sm:text-sm font-semibold text-white whitespace-nowrap truncate">
+                {getFullName()}
+              </div>
+              <div className="text-xs text-gray-400 whitespace-nowrap truncate">
+                {getRole()}
+              </div>
+            </div>
+          </div>
           {navItems.map((item) => (
             <div
               key={item.path}
@@ -116,34 +146,20 @@ export default function Sidebar({ isOpen, setIsOpen }) {
                 <span className="shrink-0 text-lg sm:text-xl">{item.icon}</span>
                 <span className="whitespace-nowrap truncate">{item.label}</span>
               </div>
-              
             </div>
           ))}
         </nav>
 
-        <div className="p-3 sm:p-4 border-t border-gray-700 shrink-0">
-          <div className="flex items-center gap-3">
-            <Avatar 
-              src={user?.avatar} 
-              alt={getFullName()}
-              sx={{ 
-                width: 40, 
-                height: 40,
-                bgcolor: 'var(--color-primary)',
-                fontSize: '1rem'
-              }}
-            >
-              {getInitials()}
-            </Avatar>
-            <div className="flex-1 min-w-0">
-              <div className="text-xs sm:text-sm font-semibold text-white whitespace-nowrap truncate">
-                {getFullName()}
-              </div>
-              <div className="text-xs text-gray-400 whitespace-nowrap truncate">
-                {getRole()}
-              </div>
-            </div>
-          </div>
+        <div className="p-3 sm:p-4 border-t border-gray-700 shrink-0 space-y-3">
+          
+
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-bold text-gray-400 hover:text-red-400 hover:bg-gray-800 transition-colors"
+          >
+            <LogoutIcon fontSize="small" />
+            تسجيل الخروج
+          </button>
         </div>
       </div>
     </>

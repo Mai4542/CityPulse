@@ -16,11 +16,18 @@ export const fetchAddressFromCoords = async (lat, lng) => {
   }
 };
 
+const QALYUBIA_BOUNDS = [
+  [30.05, 30.95],
+  [30.65, 31.45],
+];
+
+const QALYUBIA_CENTER = [30.33, 31.18];
+
 const RecenterMap = ({ lat, lng, recenterTrigger }) => {
   const map = useMap();
   useEffect(() => {
     if (lat && lng) {
-      map.flyTo([lat, lng], 17, { duration: 1.2 });
+      map.flyTo([lat, lng], 15, { duration: 1.2 });
     }
   }, [lat, lng, recenterTrigger]);
   return null;
@@ -37,15 +44,17 @@ const pinIcon = new L.Icon({
 const ClickHandler = ({ onSelect }) => {
   useMapEvents({
     click(e) {
-      onSelect(e.latlng.lat, e.latlng.lng);
+      const { lat, lng } = e.latlng;
+      if (lat >= 30.05 && lat <= 30.65 && lng >= 30.95 && lng <= 31.45) {
+        onSelect(lat, lng);
+      }
     },
   });
   return null;
 };
 
 const LocationMap = ({ lat, lng, onLocationChange, shouldRecenter }) => {
-  const defaultCenter = [30.18, 31.2];
-  const center = lat && lng ? [lat, lng] : defaultCenter;
+  const center = lat && lng ? [lat, lng] : QALYUBIA_CENTER;
 
   const handleMarkerDrag = (e) => {
     const { lat: newLat, lng: newLng } = e.target.getLatLng();
@@ -56,7 +65,11 @@ const LocationMap = ({ lat, lng, onLocationChange, shouldRecenter }) => {
     <div className="relative h-56 rounded-t-2xl overflow-hidden">
       <MapContainer
         center={center}
-        zoom={15}
+        zoom={12}
+        minZoom={10}
+        maxZoom={17}
+        maxBounds={QALYUBIA_BOUNDS}
+        maxBoundsViscosity={1.0}
         scrollWheelZoom={true}
         style={{ height: "100%", width: "100%" }}
       >

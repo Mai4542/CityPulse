@@ -5,14 +5,14 @@ import { useAuth } from "./context/useAuth";
 import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import TrackReport from "./pages/TrackReport";
+
 import FAQ from "./pages/FAQ";
 import ContactUs from "./pages/ContactUs";
 
 // User Pages
 import UserDashboard from "./pages/UserDashboard";
 import ReportForm from "./pages/ReportForm";
-import Analytics from "./pages/Analytics";
+
 import ReportDetail from "./pages/ReportDetail";
 
 // Admin Pages
@@ -22,7 +22,7 @@ import AdminReports from "./pages/admin/AllReports";
 import HeatMap from "./pages/admin/HeatMap";
 import ClusteringPage from "./pages/admin/ClusteringPage";
 import UsersManagement from "./pages/admin/UsersManagement";
-
+import Analytics from "./pages/admin/Analytics";
 
 
 // Routes Protection
@@ -47,7 +47,7 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/track" element={<TrackReport />} />
+       
         <Route path="/faq" element={<FAQ />} />
         <Route path="/contact" element={<ContactUs />} />
         
@@ -69,6 +69,7 @@ function App() {
             <Route path="clustering" element={<ClusteringPage />} />
             <Route path="users" element={<UsersManagement />} />
             <Route path="reports/:id" element={<ReportDetail />} />
+            <Route path="analytics" element={<Analytics />} />
           </Route>
         </Route>
 

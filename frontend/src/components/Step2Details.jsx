@@ -166,7 +166,29 @@ const Step2Details = ({
           )}
         </div>
       </div>
-
+          <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 mb-6">
+  <h3 className="font-black text-slate-800 mb-4">معلومات الموقع</h3>
+  
+  <label className="flex items-center gap-3 cursor-pointer mb-3">
+    <input
+      type="checkbox"
+      checked={formData.nearHospital}
+      onChange={(e) => updateForm('nearHospital', e.target.checked)}
+      className="w-5 h-5 rounded border-slate-300 text-teal-600 focus:ring-teal-500"
+    />
+    <span className="text-sm font-bold text-slate-700">قريب من مستشفى </span>
+  </label>
+  
+  <label className="flex items-center gap-3 cursor-pointer">
+    <input
+      type="checkbox"
+      checked={formData.nearSchool}
+      onChange={(e) => updateForm('nearSchool', e.target.checked)}
+      className="w-5 h-5 rounded border-slate-300 text-teal-600 focus:ring-teal-500"
+    />
+    <span className="text-sm font-bold text-slate-700">قريب من مدرسة </span>
+  </label>
+</div>
       <div className="flex gap-3">
         <button
           onClick={onBack}
