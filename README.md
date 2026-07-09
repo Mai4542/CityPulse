@@ -194,11 +194,11 @@ citypulse/
 
 | | |
 |---|---|
-| ![شاشة 1](./public/screenshots/p1.jpeg) | ![شاشة 2](./public/screenshots/p2.jpeg) |
-| ![شاشة 3](./public//screenshots/p3.jpeg) | ![شاشة 4](./public/screenshots/p4.jpeg) |
-| ![شاشة 5](./public/screenshots/p5.jpeg) | ![شاشة 6](./public/screenshots/p6.jpeg) |
-| ![شاشة 7](./public/screenshots/p7.jpeg) | ![شاشة 8](./public/screenshots/p8.jpeg) |
-| ![شاشة 9](./public/screenshots/p9.jpeg) | ![شاشة 10](./public/screenshots/p10.jpeg) |
+| ![شاشة 1](./frontend/public/screenshots/p1.jpeg) | ![شاشة 2](./frontend/public/screenshots/p2.jpeg) |
+| ![شاشة 3](./public//screenshots/p3.jpeg) | ![شاشة 4](./frontend/public/screenshots/p4.jpeg) |
+| ![شاشة 5](./frontend/public/screenshots/p5.jpeg) | ![شاشة 6](./frontend/public/screenshots/p6.jpeg) |
+| ![شاشة 7](./frontend/public/screenshots/p7.jpeg) | ![شاشة 8](./frontend/public/screenshots/p8.jpeg) |
+| ![شاشة 9](./frontend/public/screenshots/p9.jpeg) | ![شاشة 10](./frontend/public/screenshots/p10.jpeg) |
 
 
 
