@@ -75,6 +75,13 @@ export const reportAPI = {
   rateReport: (id, score, comment) =>
     api.patch(`/reports/${id}/rate`, { score, comment }),
 
+  trackReport: (reportNumber) =>
+    api.get(`/reports/track/${reportNumber}`),
+};
+
+export const contactAPI = {
+  submitContact: (data) =>
+    api.post('/contact', data),
 };
 
 export const adminAPI = {
@@ -107,11 +114,22 @@ export const adminAPI = {
   toggleUserStatus: (userId, isActive) =>
     api.patch(`/admin/users/${userId}/status`, { isActive }),
 
-   getHeatmapData: (timeRange) =>
+  getHeatmapData: (timeRange) =>
     api.get(`/heatmap/data${timeRange ? `?timeRange=${timeRange}` : ''}`),
 
-   runClustering: () =>
+  runClustering: () =>
     api.post('/clustering/run'),
+
+  getContacts: (filters = {}) => {
+    const params = new URLSearchParams(filters).toString();
+    return api.get(`/contact?${params}`);
+  },
+
+  markContactRead: (id) =>
+    api.patch(`/contact/${id}/read`),
+
+  toggleContactReplied: (id) =>
+    api.patch(`/contact/${id}/replied`),
 };
 
 export default api;

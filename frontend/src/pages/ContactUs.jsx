@@ -14,6 +14,7 @@ import {
 import { FaFacebookF, FaTwitter, FaYoutube } from "react-icons/fa";
 
 import Navbar from "../components/common/Navbar";
+import { contactAPI } from '../api/api';
 
 
 
@@ -252,7 +253,7 @@ export default function ContactUs() {
   const [formData, setFormData] = useState(initialFormState);
   const [errors, setErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState("");
-  
+  const [loading, setLoading] = useState(false);
 
   const validateForm = () => {
     const newErrors = {};
@@ -299,21 +300,27 @@ export default function ContactUs() {
     setSuccessMessage("");
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = async (event) => {
+  event.preventDefault();
 
-    const validationErrors = validateForm();
+  const validationErrors = validateForm();
+  if (Object.keys(validationErrors).length > 0) {
+    setErrors(validationErrors);
+    return;
+  }
 
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      setSuccessMessage("");
-      return;
-    }
-
+  try {
+    setLoading(true);
+    await contactAPI.submitContact(formData);
     setErrors({});
-    setSuccessMessage("تم إرسال رسالتك بنجاح، وسيتم التواصل معك قريبًا.");
+    setSuccessMessage('تم إرسال رسالتك بنجاح، وسيتم التواصل معك قريباً.');
     setFormData(initialFormState);
-  };
+  } catch (error) {
+    setErrors({ general: 'فشل إرسال الرسالة، حاول مرة أخرى.' });
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { categories, severities, districts } from "../pages/data/reportConstants";
 import LocationMap, { fetchAddressFromCoords } from "./LocationMap";
 
@@ -49,6 +49,19 @@ const Step1Location = ({ formData, updateForm, onNext }) => {
   const [recenterTrigger, setRecenterTrigger] = useState(false);
   const [loadingAddress, setLoadingAddress] = useState(false);
   const [locationError, setLocationError] = useState("");
+  const [showCustomDistrict, setShowCustomDistrict] = useState(false);
+  const [districtOpen, setDistrictOpen] = useState(false);
+  const districtRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (districtRef.current && !districtRef.current.contains(e.target)) {
+        setDistrictOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const updateAddressFromCoords = async (lat, lng) => {
     setLoadingAddress(true);
@@ -67,6 +80,10 @@ const Step1Location = ({ formData, updateForm, onNext }) => {
       const detectedDistrict = extractDistrict(data, districts);
       if (detectedDistrict) {
         updateForm("district", detectedDistrict);
+        setShowCustomDistrict(false);
+      } else {
+        updateForm("district", "__other__");
+        setShowCustomDistrict(true);
       }
     } catch (error) {
       console.error("فشل جلب اسم العنوان:", error);
@@ -108,6 +125,15 @@ const Step1Location = ({ formData, updateForm, onNext }) => {
   };
 
   const handleNext = () => {
+    const district = formData.district === "__other__" 
+      ? formData.customDistrict?.trim() 
+      : formData.district;
+    
+    if (!district) {
+      setLocationError("يرجى اختيار أو كتابة اسم المنطقة");
+      return;
+    }
+
     const address = formData.locationText?.trim() || formData.resolvedAddress?.trim();
     if (!address) {
       setLocationError("يرجى تحديد موقع أو كتابة العنوان أولاً");
@@ -132,8 +158,8 @@ const Step1Location = ({ formData, updateForm, onNext }) => {
 
   return (
     <>
-      <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
-        <div className="relative overflow-hidden">
+      <div className="bg-white rounded-2xl border border-slate-100 shadow-sm">
+        <div className="relative overflow-hidden rounded-t-2xl">
           <LocationMap
             lat={formData.lat}
             lng={formData.lng}
@@ -200,18 +226,68 @@ const Step1Location = ({ formData, updateForm, onNext }) => {
                 if (e.target.value.trim()) setLocationError("");
               }}
             />
-            <select
-              value={formData.district}
-              onChange={(e) => updateForm("district", e.target.value)}
-              className="border border-slate-200 rounded-xl px-3 py-2.5 text-sm font-bold text-slate-700 focus:outline-none focus:border-primary bg-white"
-            >
-              {districts.map((d) => (
-                <option key={d} value={d}>
-                  {d}
-                </option>
-              ))}
-            </select>
+            <div className="relative" ref={districtRef} style={{ minWidth: "140px" }}>
+              <button
+                type="button"
+                onClick={() => setDistrictOpen((prev) => !prev)}
+                className="w-full h-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm font-bold text-slate-700 focus:outline-none focus:border-primary bg-white flex items-center justify-between gap-2"
+              >
+                <span className="truncate">
+                  {formData.district === "__other__"
+                    ? " إضافة يدوياً..."
+                    : formData.district || "اختر المنطقة"}
+                </span>
+                <svg
+                  className={`w-4 h-4 text-slate-400 shrink-0 transition-transform ${districtOpen ? "rotate-180" : ""}`}
+                  fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              {districtOpen && (
+                <div className="absolute top-full mt-2 right-0 left-0 bg-white border border-slate-200 rounded-xl shadow-lg max-h-60 overflow-y-auto z-[1100]">
+                  {districts.map((d) => (
+                    <button
+                      key={d}
+                      type="button"
+                      onClick={() => {
+                        updateForm("district", d);
+                        setShowCustomDistrict(false);
+                        setDistrictOpen(false);
+                      }}
+                      className={`w-full text-right px-4 py-2.5 text-sm font-bold hover:bg-slate-50 transition-colors ${
+                        formData.district === d ? "bg-primary/10 text-primary-dark" : "text-slate-700"
+                      }`}
+                    >
+                      {d}
+                    </button>
+                  ))}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      updateForm("district", "__other__");
+                      setShowCustomDistrict(true);
+                      setDistrictOpen(false);
+                    }}
+                    className="w-full text-right px-4 py-2.5 text-sm font-bold text-teal-600 hover:bg-teal-50 border-t border-slate-100"
+                  >
+                    إضافة يدوياً...
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
+
+          {(formData.district === "__other__" || showCustomDistrict) && (
+            <input
+              type="text"
+              placeholder="اكتب اسم المركز/المنطقة..."
+              value={formData.customDistrict || ""}
+              onChange={(e) => updateForm("customDistrict", e.target.value)}
+              className="w-full border border-teal-300 rounded-xl px-4 py-2.5 text-sm font-bold text-slate-700 focus:outline-none focus:border-teal-500 bg-teal-50 mt-2"
+            />
+          )}
 
           {locationError && (
             <p className="text-xs font-bold text-red-500 mt-2 flex items-center gap-1">

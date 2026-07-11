@@ -23,7 +23,7 @@ import HeatMap from "./pages/admin/HeatMap";
 import ClusteringPage from "./pages/admin/ClusteringPage";
 import UsersManagement from "./pages/admin/UsersManagement";
 import Analytics from "./pages/admin/Analytics";
-
+import ContactsList from "./pages/admin/ContactsList"
 
 // Routes Protection
 import ProtectedRoute from "./routes/ProtectedRoute";
@@ -70,6 +70,7 @@ function App() {
             <Route path="users" element={<UsersManagement />} />
             <Route path="reports/:id" element={<ReportDetail />} />
             <Route path="analytics" element={<Analytics />} />
+            <Route path="contacts" element={<ContactsList />} />
           </Route>
         </Route>
 

@@ -21,6 +21,7 @@ const ReportForm = ({ onBack }) => {
     lat: null,
     lng: null,
     district: "قليوب",
+    customDistrict: "",
     category: "",
     severity: "",
     description: "",
@@ -58,7 +59,7 @@ const ReportForm = ({ onBack }) => {
     else navigate(-1);
   };
 
-  const handleSubmit = async () => {
+ const handleSubmit = async () => {
     try {
       setLoading(true);
       setError("");
@@ -70,13 +71,18 @@ const ReportForm = ({ onBack }) => {
       formDataToSend.append("isRecurring", formData.isRecurring);
       formDataToSend.append("location[lat]", formData.lat ?? "");
       formDataToSend.append("location[lng]", formData.lng ?? "");
-      formDataToSend.append("location[district]", formData.district);
+      formDataToSend.append(
+        "location[district]",
+        formData.district === "__other__" 
+          ? formData.customDistrict || "غير محدد"
+          : formData.district
+      );
       formDataToSend.append(
         "location[address]",
         formData.locationText || formData.resolvedAddress || "",
       );
-       formDataToSend.append("nearHospital", formData.nearHospital || false);
-    formDataToSend.append("nearSchool", formData.nearSchool || false);
+      formDataToSend.append("nearHospital", formData.nearHospital || false);
+      formDataToSend.append("nearSchool", formData.nearSchool || false);
 
       formData.photos.forEach((photo) => {
         formDataToSend.append("images", photo);

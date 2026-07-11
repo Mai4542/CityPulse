@@ -4,6 +4,7 @@ import MapIcon from "@mui/icons-material/Map";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import PeopleIcon from "@mui/icons-material/People";
 import CloseIcon from "@mui/icons-material/Close";
+import MailIcon from "@mui/icons-material/Mail"
 import LogoutIcon from '@mui/icons-material/Logout';
 import DashboardIcon from '@mui/icons-material/DashboardOutlined'
 import { useNavigate, useLocation } from "react-router-dom";
@@ -18,6 +19,7 @@ const navItems = [
   { icon: <AccountTreeIcon />, label: "تجميع البلاغات", path: "/admin-dashboard/clustering" },
   { icon: <MapIcon />, label: "الخريطة الحية", path: "/admin-dashboard/map" },
   { icon: <BarChartIcon />, label: "التحليلات", path: "/admin-dashboard/analytics" },
+  { icon: <MailIcon />, label: "الرسائل", path: "/admin-dashboard/contacts" },
 ];
 
 export default function Sidebar({ isOpen, setIsOpen }) {

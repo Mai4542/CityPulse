@@ -1,16 +1,15 @@
-# 🏙️ CityPulse | القلوبية
+# 🏙️ CityPulse | القليوبية
 
 <div align="center">
 
-![Version](img.shields.io/badge/version-1.0.0-blue?style=for-the-badge)
-![License](img.shields.io/badge/license-MIT-green?style=for-the-badge)
-![MongoDB](img.shields.io/badge/MongoDB-47A248?style=flat-square&logo=mongodb&logoColor=white)
-![Express](img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white)
-![React](img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=black)
-![Node.js](img.shields.io/badge/Node.js-20-339933?style=flat-square&logo=node.js&logoColor=white)
-![Tailwind](img.shields.io/badge/Tailwind-3-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
-![Vite](img.shields.io/badge/Vite-5-646CFF?style=flat-square&logo=vite&logoColor=white)
-![Leaflet](img.shields.io/badge/Leaflet-199900?style=flat-square&logo=leaflet&logoColor=white)
+![Version](https://img.shields.io/badge/version-1.0.0-blue?style=for-the-badge)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=flat-square&logo=mongodb&logoColor=white)
+![Express](https://img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white)
+![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=black)
+![Node.js](https://img.shields.io/badge/Node.js-20-339933?style=flat-square&logo=node.js&logoColor=white)
+![Tailwind](https://img.shields.io/badge/Tailwind-3-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-5-646CFF?style=flat-square&logo=vite&logoColor=white)
+![Leaflet](https://img.shields.io/badge/Leaflet-199900?style=flat-square&logo=leaflet&logoColor=white)
 
 **Smart Municipal Issue Reporting & Management System**<br/>
 *Qalyubia Governorate, Egypt 🇪🇬*
@@ -33,7 +32,6 @@
 - [Getting Started](#-getting-started)
 - [Screenshots](#-screenshots)
 - [Contributors](#-contributors)
-
 
 ---
 
@@ -112,36 +110,38 @@
 ## 🏗️ Architecture
 
 ### Backend Structure
-backend/
-├── config/ # Database connection
-├── controllers/ # Request handlers (auth, report, admin, clustering, heatmap, riskIndex)
-├── middleware/ # Auth (JWT), Role-based access, File upload
-├── models/ # Mongoose schemas (User, Report)
-├── routes/ # Express route definitions
-├── services/ # Business logic (priority, clustering, riskIndex)
-├── utils/ # Helpers (AppError, priorityScore, validation)
-└── server.js # Entry point
 
-text
+```
+backend/
+├── config/        # Database connection
+├── controllers/    # Request handlers (auth, report, admin, clustering, heatmap, riskIndex)
+├── middleware/      # Auth (JWT), Role-based access, File upload
+├── models/          # Mongoose schemas (User, Report)
+├── routes/          # Express route definitions
+├── services/        # Business logic (priority, clustering, riskIndex)
+├── utils/           # Helpers (AppError, priorityScore, validation)
+└── server.js         # Entry point
+```
 
 ### Frontend Structure
-frontend/src/
-├── api/ # Axios instance & API service objects
-├── components/ # Reusable components
-│ ├── analytics/ # Chart widgets (Donut, Line, Bar, Table)
-│ ├── common/ # Shared (Navbar, Sidebar, UserSidebar, Settings)
-│ ├── layout/ # AdminLayout with nested routes
-│ ├── map/ # HeatMap, AreaInfoCard, MapLegend, LocationMap
-│ └── reports/ # ReportsTable, ReportDetailContent
-├── context/ # AuthProvider (React Context API)
-├── pages/ # Route pages
-│ ├── admin/ # AdminDashboard, AllReports, HeatMap, Clustering, Users, Analytics
-│ └── ... # Landing, Login, Register, UserDashboard, ReportForm, TrackReport
-├── routes/ # ProtectedRoute, AdminRoute
-├── utils/ # reportDisplay, constants
-└── App.js # Root component with router
 
-text
+```
+frontend/src/
+├── api/              # Axios instance & API service objects
+├── components/       # Reusable components
+│   ├── analytics/    # Chart widgets (Donut, Line, Bar, Table)
+│   ├── common/       # Shared (Navbar, Sidebar, UserSidebar, Settings)
+│   ├── layout/       # AdminLayout with nested routes
+│   ├── map/          # HeatMap, AreaInfoCard, MapLegend, LocationMap
+│   └── reports/      # ReportsTable, ReportDetailContent
+├── context/          # AuthProvider (React Context API)
+├── pages/            # Route pages
+│   ├── admin/        # AdminDashboard, AllReports, HeatMap, Clustering, Users, Analytics
+│   └── ...           # Landing, Login, Register, UserDashboard, ReportForm, TrackReport
+├── routes/           # ProtectedRoute, AdminRoute
+├── utils/            # reportDisplay, constants
+└── App.js            # Root component with router
+```
 
 ### Key Design Patterns
 - **Service Layer**: Business logic separated from controllers (Priority, Clustering, Risk Index)
@@ -171,7 +171,6 @@ text
 | `GET` | `/api/reports/:id` | ✅ | Get report details (owner or admin only) |
 | `DELETE` | `/api/reports/:id` | ✅ | Delete report (owner + Open status only) |
 | `PATCH` | `/api/reports/:id/rate` | ✅ | Rate resolved report (1-5 stars) |
-
 
 ### 👨‍💼 Admin
 | Method | Endpoint | Auth | Description |
@@ -215,7 +214,7 @@ text
 
 ### Risk Level Colors (Heatmap)
 | Level | Hex | Opacity | Label (AR) |
-|-------|-----|---------|-------------|
+|-------|-----|---------|------------|
 | Critical | `#DC2626` | 0.6 | حرج جداً |
 | High | `#D97706` | 0.5 | مرتفع |
 | Medium | `#EAB308` | 0.4 | متوسط |
@@ -234,6 +233,7 @@ text
 Create `.env` files in both `backend/` and `frontend/` directories:
 
 ### Backend (`backend/.env`)
+
 ```env
 PORT=5000
 NODE_ENV=development
@@ -245,61 +245,89 @@ CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
 FRONTEND_URL=http://localhost:5173
-Frontend (frontend/.env)
-env
+```
+
+### Frontend (`frontend/.env`)
+
+```env
 VITE_API_URL=http://localhost:5000/api
-🚀 Getting Started
-Prerequisites
-Node.js ≥ 18.x
+```
 
-MongoDB ≥ 6.x (local or Atlas)
+---
 
-Cloudinary Account (free tier) for image uploads
+## 🚀 Getting Started
 
-npm ≥ 9.x
+### Prerequisites
+- Node.js ≥ 18.x
+- MongoDB ≥ 6.x (local or Atlas)
+- Cloudinary Account (free tier) for image uploads
+- npm ≥ 9.x
 
-Installation
-bash
+### Installation
+
+```bash
 # 1. Clone the repository
-git clone github.com/your-username/citypulse.git
+git clone https://github.com/your-username/citypulse.git
 cd citypulse
 
 # 2. Backend setup
 cd backend
 npm install
 cp .env.example .env    # Edit with your values
-node server.js              # Starts on http://localhost:5000
+node server.js          # Starts on http://localhost:5000
 
 # 3. Frontend setup
 cd ../frontend
 npm install
 cp .env.example .env    # Edit with your values
 npm run dev              # Starts on http://localhost:5173
-Default Admin Account
-Field	Value
-Email	admin@citypulse.com
-Password	admin123
-⚠️ Change default credentials immediately after first login!
+```
 
-🖼️ Screenshots
-./frontend/public/screenshots/p1.jpeg	./frontend/public/screenshots/p2.jpeg
-./frontend/public/screenshots/p3.jpeg	./frontend/public/screenshots/p4.jpeg
-./frontend/public/screenshots/p5.jpeg	./frontend/public/screenshots/p6.jpeg
-./frontend/public/screenshots/p7.jpeg	./frontend/public/screenshots/p8.jpeg
-./frontend/public/screenshots/p9.jpeg	./frontend/public/screenshots/p10.jpeg
-👥 Contributors
-Name	Role
-Mai Mohamed	Team Leader & Full Stack Developer
-Asmaa AbdelKader	Frontend Developer
-Yehya Mostafa	Frontend Developer
-Salma Sharaawy	Frontend Developer
-Malak Allam	Frontend Developer
-Noran Wael	Frontend Developer
+### Default Admin Account
+| Field | Value |
+|-------|-------|
+| Email | admin@citypulse.com |
+| Password | admin123 |
 
+⚠️ **Change default credentials immediately after first login!**
+
+---
+
+## 📸 Screenshots
 
 <div align="center">
+  <img src="./frontend/public/screenshots/p1.jpeg" alt="Screenshot 1" width="400"/>
+  <img src="./frontend/public/screenshots/p2.jpeg" alt="Screenshot 2" width="400"/>
+  <br/>
+  <img src="./frontend/public/screenshots/p3.jpeg" alt="Screenshot 3" width="400"/>
+  <img src="./frontend/public/screenshots/p4.jpeg" alt="Screenshot 4" width="400"/>
+  <br/>
+  <img src="./frontend/public/screenshots/p5.jpeg" alt="Screenshot 5" width="400"/>
+  <img src="./frontend/public/screenshots/p6.jpeg" alt="Screenshot 6" width="400"/>
+  <br/>
+  <img src="./frontend/public/screenshots/p7.jpeg" alt="Screenshot 7" width="400"/>
+  <img src="./frontend/public/screenshots/p8.jpeg" alt="Screenshot 8" width="400"/>
+  <br/>
+  <img src="./frontend/public/screenshots/p9.jpeg" alt="Screenshot 9" width="400"/>
+  <img src="./frontend/public/screenshots/p10.jpeg" alt="Screenshot 10" width="400"/>
+</div>
+
+---
+
+## 👥 Contributors
+
+| Name | Role |
+|------|------|
+| Mai Mohamed | Team Leader & Full Stack Developer |
+| Asmaa AbdelKader | Frontend Developer |
+| Yehya Mostafa | Frontend Developer |
+| Salma Sharaawy | Frontend Developer |
+| Malak Allam | Frontend Developer |
+| Noran Wael | Frontend Developer |
+
+<div align="center">
+
 Made with ❤️ for Qalyubia Governorate
 
-⬆ Back to Top
 
-</div> ```
+</div>

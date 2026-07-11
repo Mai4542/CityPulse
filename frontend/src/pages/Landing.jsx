@@ -15,7 +15,6 @@ const Landing = () => {
   useEffect(() => {
     if (location.state?.scrollTo) {
       const sectionId = location.state.scrollTo;
-      // نضيف تأخير بسيط عشان الصفحة تتحمل
       setTimeout(() => {
         const element = document.getElementById(sectionId);
         if (element) {
@@ -23,7 +22,6 @@ const Landing = () => {
         }
       }, 500);
       
-      // نمسح الـ state عشان مايحصلش scroll كل مرة
       navigate(location.pathname, { replace: true, state: {} });
     }
   }, [location, navigate]);
