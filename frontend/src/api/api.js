@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://city-pulse-n8sdv751h-mailalala4542-5981s-projects.vercel.app/api',
+  baseURL: 'https://city-pulse-smoky.vercel.app/api',
   headers: {
     'Content-Type': 'application/json',
   },
