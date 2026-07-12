@@ -2,7 +2,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
-const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const rateLimit = require('express-rate-limit');
 
@@ -25,17 +24,11 @@ const app = express();
 
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
-app.use(helmet());
-app.use(mongoSanitize());
 
-app.use(cors({
-  origin: 'https://city-pulse-front-end.vercel.app',
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
-}));
-
+app.use(cors());
 app.options('*', cors());
+
+app.use(mongoSanitize());
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
