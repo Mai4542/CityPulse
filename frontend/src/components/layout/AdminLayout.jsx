@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "../common/Sidebar";
-import Navbar2 from "../common/Navbar2";
+import Navbar2 from "../common/NavBar2"
 
 export default function AdminLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
