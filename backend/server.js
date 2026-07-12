@@ -29,7 +29,7 @@ app.use(helmet());
 app.use(mongoSanitize());
 
 app.use(cors({
-  origin: '*',
+  origin: 'https://city-pulse-front-end.vercel.app',
   credentials: true,
 }));
 
